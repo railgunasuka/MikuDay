@@ -10,6 +10,9 @@ import '/home_page/home_page_widget.dart';
 
 import 'package:window_manager/window_manager.dart';
 
+import '/tray_utils.dart';
+import '/tray_wather.dart';
+
 void main() async {
 
 
@@ -39,6 +42,11 @@ void main() async {
       child: MyApp(),
     ),
   );
+
+  // 初始化系统托盘
+  await initSystemTray();
+
+  
 }
 
 
@@ -68,9 +76,10 @@ class MyApp extends StatelessWidget {
 
       /* home: const CreateWidget(), // 直接使用拆分后的Widget
             // 命名路由配置 */
+      
       routes: {
-        '/': (context) => CreateWidget(),
-        '/second': (context) => HomePageWidget(),
+        '/': (context) => const TrayWatcher(child: CreateWidget(),),
+        '/second': (context) => const TrayWatcher(child: HomePageWidget(),),
       },
 
 
