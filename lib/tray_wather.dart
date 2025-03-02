@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:tray_manager/tray_manager.dart';
+import 'package:window_manager/window_manager.dart';
 
 class TrayWatcher extends StatefulWidget {
   final Widget child;
@@ -36,13 +37,17 @@ class _TrayWatcherState extends State<TrayWatcher> with TrayListener {
   }
 
   @override
-  void onTrayMenuItemClick(MenuItem menuItem) {
+  Future<void> onTrayMenuItemClick(MenuItem menuItem) async {
     switch (menuItem.key) {
-      case 'open':
-        print("点击了打开菜单！");
+      
+      case 'toggle_top':
+        bool isAlwaysOnTop = await windowManager.isAlwaysOnTop();
+        await windowManager.setAlwaysOnTop(!isAlwaysOnTop);
         break;
+     
       case 'quit':
         exit(0);
+      
       default:
         break;
     }
