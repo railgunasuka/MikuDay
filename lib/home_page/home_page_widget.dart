@@ -11,7 +11,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:provider/provider.dart';
 
-
+import 'package:window_manager/window_manager.dart';
 
 import '/app_state.dart';
 
@@ -1011,6 +1011,21 @@ class _HomePageWidgetState extends State<HomePageWidget>
                 ),
               ),
             ),
+          
+          
+            // 顶部边缘拖动条
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 10, // 仅10px高度的触发区域
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onPanStart: (_) => windowManager.startDragging(),
+                child: Container(color: Colors.red),
+              ),
+            )
+          
           ],
         ),
       ),

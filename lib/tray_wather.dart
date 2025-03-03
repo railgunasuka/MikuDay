@@ -37,6 +37,13 @@ class _TrayWatcherState extends State<TrayWatcher> with TrayListener {
   }
 
   @override
+  void onTrayIconMouseDown() {
+    windowManager.show(); // 该方法来自window_manager插件
+  }
+
+
+
+  @override
   Future<void> onTrayMenuItemClick(MenuItem menuItem) async {
     switch (menuItem.key) {
       

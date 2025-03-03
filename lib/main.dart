@@ -19,14 +19,16 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // 必须加上这一行。
   await windowManager.ensureInitialized();
+  // 初始化窗口置顶状态（可选）
+  await windowManager.setAlwaysOnTop(true);
 
   WindowOptions windowOptions = WindowOptions(
-    // size: Size(800, 600),
+    size: Size(450, 850),
     minimumSize: Size(400, 850), // 设置最小窗口大小
     center: true,
     // backgroundColor: Colors.transparent,
-    // skipTaskbar: false,
-    // titleBarStyle: TitleBarStyle.hidden,
+    skipTaskbar: true,
+    titleBarStyle: TitleBarStyle.hidden,
   );
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();

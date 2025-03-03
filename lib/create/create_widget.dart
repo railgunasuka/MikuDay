@@ -13,6 +13,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import '/app_state.dart';
 
+import 'package:window_manager/window_manager.dart';
+
 
 
 class CreateWidget extends StatefulWidget {
@@ -1814,6 +1816,20 @@ class _CreateWidgetState extends State<CreateWidget>
                 ),
               ),
             ),
+          
+            // 顶部边缘拖动条
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 10, // 仅10px高度的触发区域
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onPanStart: (_) => windowManager.startDragging(),
+                child: Container(color: Colors.red),
+              ),
+            )
+          
           ],
         ),
       ),
