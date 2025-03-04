@@ -17,6 +17,8 @@ import '/app_state.dart';
 
 import 'dart:async';
 
+
+
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({super.key});
 
@@ -311,6 +313,12 @@ class _HomePageWidgetState extends State<HomePageWidget>
         FocusScope.of(context).unfocus();
         FocusManager.instance.primaryFocus?.unfocus();
       },
+
+
+      onSecondaryTap: () => Navigator.pushNamed(context, '/cc'),
+
+
+
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -734,7 +742,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryText,
-                                                fontSize: 10,
+                                                fontSize: 7.5,
                                                 letterSpacing: 0.0,
                                               ),
                                         );
@@ -784,7 +792,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryText,
-                                                fontSize: 10,
+                                                fontSize: 7.5,
                                                 letterSpacing: 0.0,
                                               ),
                                         );
@@ -833,7 +841,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryText,
-                                                fontSize: 10,
+                                                fontSize: 7.5,
                                                 letterSpacing: 0.0,
                                               ),
                                         );

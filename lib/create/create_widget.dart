@@ -17,6 +17,7 @@ import 'package:window_manager/window_manager.dart';
 
 
 
+
 class CreateWidget extends StatefulWidget {
   const CreateWidget({super.key});
 
@@ -177,6 +178,12 @@ class _CreateWidgetState extends State<CreateWidget>
         FocusScope.of(context).unfocus();
         FocusManager.instance.primaryFocus?.unfocus();
       },
+
+
+      onSecondaryTap: () => Navigator.pushNamed(context, '/cc'),
+
+
+
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -1378,7 +1385,7 @@ class _CreateWidgetState extends State<CreateWidget>
                       return Slidable(
                         endActionPane: ActionPane(
                           motion: const ScrollMotion(),
-                          extentRatio: 0.75,
+                          extentRatio: 0.84,
                           children: [
                             SlidableAction(
                               label: 'Color',

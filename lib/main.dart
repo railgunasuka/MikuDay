@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'create/create_widget.dart'; // 导入Widget文件
 
@@ -13,6 +14,9 @@ import 'package:window_manager/window_manager.dart';
 import '/tray_utils.dart';
 import '/tray_wather.dart';
 
+import '/pageC.dart';
+
+
 void main() async {
 
 
@@ -21,16 +25,21 @@ void main() async {
   await windowManager.ensureInitialized();
   // 初始化窗口置顶状态（可选）
   await windowManager.setAlwaysOnTop(true);
+  await windowManager.setResizable(false);
+  
+
+  // originalMinSize = const Size(400, 850); // 替换为你的默认最小值
 
   WindowOptions windowOptions = WindowOptions(
-    size: Size(450, 850),
+    size: Size(400, 850),
     minimumSize: Size(400, 850), // 设置最小窗口大小
-    center: true,
+    // center: true,
     // backgroundColor: Colors.transparent,
     skipTaskbar: true,
     titleBarStyle: TitleBarStyle.hidden,
   );
   windowManager.waitUntilReadyToShow(windowOptions, () async {
+    await windowManager.setAlignment(Alignment.centerRight);
     await windowManager.show();
     await windowManager.focus();
   });
@@ -82,6 +91,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const TrayWatcher(child: CreateWidget(),),
         '/second': (context) => const TrayWatcher(child: HomePageWidget(),),
+        '/cc': (context) => const TrayWatcher(child: PageC(),),
       },
 
 
