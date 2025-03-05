@@ -24,6 +24,7 @@ class _PageCState extends State<PageC> with WindowListener {
 
      // 延迟到页面渲染完成后调整窗口
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await windowManager.hide();
       // 1. 强制窗口至少为 AB 的最小尺寸（确保跳转后初始安全）
       final currentSize = await windowManager.getSize();
       if (currentSize.width < WindowConstants.abMinSize.width || 
@@ -41,6 +42,7 @@ class _PageCState extends State<PageC> with WindowListener {
         await windowManager.setSize(WindowConstants.cTargetSize);
       }
       await windowManager.setAlignment(Alignment.centerRight);
+      await windowManager.show();
 
       
 
@@ -85,6 +87,7 @@ class _PageCState extends State<PageC> with WindowListener {
   Widget build(BuildContext context) {
     return GestureDetector(
       onSecondaryTap: () async {
+        await windowManager.hide();
         // 1. 恢复窗口最小尺寸为 AB 的 minSize
         await windowManager.setSize(WindowConstants.abMinSize);
         
@@ -101,6 +104,10 @@ class _PageCState extends State<PageC> with WindowListener {
         // 3. 执行返回导航
         await windowManager.setAlignment(Alignment.centerRight);
         Navigator.pop(context);
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          await windowManager.show();
+        });
+
       },
       child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
