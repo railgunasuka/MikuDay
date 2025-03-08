@@ -1,24 +1,74 @@
+import 'dart:async';
+
+import 'package:intl/intl.dart';
+
+import 'package:ex1/flutter_flow/flutter_flow_theme.dart';
+
+
 
 import '/size_manager.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:flutter/material.dart';
 
-class PageC extends StatefulWidget {
-  const PageC({super.key});
+import '/flutter_flow/src/utils/flutter_flow_util.dart';
+
+
+class PageCWidget extends StatefulWidget {
+  const PageCWidget({super.key});
 
   @override
-  State<PageC> createState() => _PageCState();
+  State<PageCWidget> createState() => _PageCWidgtState();
 }
 
-class _PageCState extends State<PageC> with WindowListener {
+
+class PageCModel extends FlutterFlowModel<PageCWidget> {
+
+
+
+  @override
+  void initState(BuildContext context) {}
+
+  @override
+  void dispose() {}
+}
+
+
+
+
+class _PageCWidgtState extends State<PageCWidget> with WindowListener{
+
+
+
+  String _timeString = '--:--';
+  String _dateString = '--/-- --';
+  late Timer _timer;
+
   
+
+
+
+
+
+  late PageCModel _model;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
   
   
 
   @override
   void initState() {
     super.initState();
+
+    // 立即执行第一次更新
+    _updateTime(); // 新增这行
+
+
+    // 每5秒更新一次时间
+    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
+      _updateTime();
+    });
     
     
 
@@ -57,9 +107,28 @@ class _PageCState extends State<PageC> with WindowListener {
     });
     // 添加窗口变化监听
     windowManager.addListener(this);
+
+
+
+
+    _model = createModel(context, () => PageCModel());
+
+    
+
+
+
+
   }
 
-  
+  void _updateTime() {
+    final now = DateTime.now();
+    setState(() {
+      _timeString = DateFormat('HH:mm').format(now);
+      _dateString = DateFormat('MM/dd EEEE', 'zh_CN').format(now);
+    });
+  }
+
+
 
   @override
   void dispose() {
@@ -74,6 +143,12 @@ class _PageCState extends State<PageC> with WindowListener {
       }
     });
     windowManager.removeListener(this);
+
+
+
+    _model.dispose();
+
+    _timer.cancel();
 
     super.dispose();
   }
@@ -109,15 +184,104 @@ class _PageCState extends State<PageC> with WindowListener {
         });
 
       },
+      
+      
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      
+      
       child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onPanStart: (_) => windowManager.startDragging(),
-                child: Scaffold(
+                /* child: Scaffold(
                   backgroundColor: Colors.white,
                   body: Center(
                     child: Image.asset('assets/app_icon.ico'),
                   ),
+                ), */
+                child: Scaffold(
+                  key: scaffoldKey,
+                  backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+                  body: Stack(
+                    children: [
+                      Container(
+                        width: 100,
+                        height: 100,
+                        constraints: BoxConstraints(
+                          minWidth: double.infinity,
+                          minHeight: double.infinity,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(84, 93, 110, 1),
+
+
+                          image: DecorationImage(
+                            
+                            image: AssetImage('assets/C1.gif'), 
+                            fit: BoxFit.cover,
+                          ),
+
+
+
+
+                        ),
+                      ),
+                      Align(
+                          alignment: AlignmentDirectional(0, -1),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  _timeString,
+
+                                  style:TextStyle(fontWeight:FontWeight.bold,
+                                      color: Color.fromRGBO(125, 209, 212, 1),
+                                      fontSize: 30),
+
+
+                                  /* style: FlutterFlowTheme.of(context).displayLarge.override(
+                                        fontFamily: 'Inter Tight',
+                                        color: FlutterFlowTheme.of(context).primary,
+                                        fontSize: 40,
+                                        letterSpacing: 0.0,
+                                      ), */
+                                ),
+                                Text(
+                                  _dateString,
+
+                                  style:TextStyle(fontWeight:FontWeight.bold,
+                                      color: Color.fromRGBO(125, 209, 212, 1),
+                                      fontSize: 12),
+
+
+                                  /* style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                        fontFamily: 'Inter',
+                                        color: FlutterFlowTheme.of(context).primary,
+                                        fontSize: 12,
+                                        letterSpacing: 0.0,
+                                      ), */
+
+                                ),
+                            
+                            
+                            ].divide(SizedBox(height: 0)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+
+
+
+
+
               ),
     );
   }

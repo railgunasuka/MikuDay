@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations: # 添加这行
+    sdk: flutter         # 这是Flutter SDK自带的本地化支持    
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -78,9 +80,14 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  fonts:
+    - family:  Mikufamily
+      fonts:
+        - asset: assets/fonts/Mikufamily.ttf
+
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/app_icon.ico
+    - assets/
  
 
   # An image asset can refer to one or more resolution-specific "variants", see

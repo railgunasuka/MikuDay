@@ -15,6 +15,8 @@ import '/app_state.dart';
 
 import 'package:window_manager/window_manager.dart';
 
+import '/mikufamily_icons.dart';
+
 
 
 
@@ -189,6 +191,16 @@ class _CreateWidgetState extends State<CreateWidget>
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: Stack(
           children: [
+
+
+            Positioned.fill(
+              child: Image.asset(
+                'assets/A03.jpg',
+                fit: BoxFit.cover,
+              ),
+            ),
+
+
             Align(
               alignment: AlignmentDirectional(0, -1),
               child: Padding(
@@ -1314,53 +1326,74 @@ class _CreateWidgetState extends State<CreateWidget>
                                   .asValidator(context),
                             ),
                           ),
-                          FFButtonWidget(
-                            onPressed: () async {
-                              FFAppState()
-                                  .addToLine(_model.textController.text);
-                              safeSetState(() {});
-                              FFAppState().addToTimelistA1(
-                                  _model.carousel1CurrentIndex * 10 +
-                                      _model.carousel2CurrentIndex);
-                              FFAppState().addToTimelistA2(
-                                  _model.carousel3CurrentIndex * 10 +
-                                      _model.carousel4CurrentIndex);
-                              FFAppState().addToTimelistB1(
-                                  _model.carousel5CurrentIndex * 10 +
-                                      _model.carousel6CurrentIndex);
-                              FFAppState().addToTimelistB2(
-                                  _model.carousel7CurrentIndex * 10 +
-                                      _model.carousel8CurrentIndex);
-                              safeSetState(() {});
-                              FFAppState().addToColor(Color(0x00000000));
-                              safeSetState(() {});
-                              safeSetState(() {
-                                _model.textController?.clear();
-                              });
-                            },
-                            text: '添加',
-                            icon: Icon(
-                              Icons.add,
-                              size: 15,
-                              color: Colors.white,
-                            ),
-                            options: FFButtonOptions(
-                              height: 40,
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                              iconPadding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                              color: FlutterFlowTheme.of(context).primary,
-                              textStyle:TextStyle(fontWeight:FontWeight.bold),
-                              /* textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Inter Tight',
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-                                  ), */
-                              elevation: 0,
+
+
+                          Container(
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).error,
                               borderRadius: BorderRadius.circular(8),
+
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/A02.gif'),
+                                fit: BoxFit.cover,
+                              ),
+
+
+                            ),
+                            child:
+
+
+
+                            FFButtonWidget(
+                              onPressed: () async {
+                                FFAppState()
+                                    .addToLine(_model.textController.text);
+                                safeSetState(() {});
+                                FFAppState().addToTimelistA1(
+                                    _model.carousel1CurrentIndex * 10 +
+                                        _model.carousel2CurrentIndex);
+                                FFAppState().addToTimelistA2(
+                                    _model.carousel3CurrentIndex * 10 +
+                                        _model.carousel4CurrentIndex);
+                                FFAppState().addToTimelistB1(
+                                    _model.carousel5CurrentIndex * 10 +
+                                        _model.carousel6CurrentIndex);
+                                FFAppState().addToTimelistB2(
+                                    _model.carousel7CurrentIndex * 10 +
+                                        _model.carousel8CurrentIndex);
+                                safeSetState(() {});
+                                FFAppState().addToColor(Color(0x00000000));
+                                safeSetState(() {});
+                                safeSetState(() {
+                                  _model.textController?.clear();
+                                });
+                              },
+                              text: '添加',
+                              icon: Icon(
+                                Icons.add,
+                                size: 15,
+                                color: Color.fromRGBO(253, 255, 241, 1)
+,
+                              ),
+                              options: FFButtonOptions(
+                                height: 40,
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                                iconPadding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                color: Color.fromRGBO(125, 209, 212, 0),
+                                textStyle:TextStyle(fontWeight:FontWeight.bold),
+                                /* textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Inter Tight',
+                                      color: Colors.white,
+                                      letterSpacing: 0.0,
+                                    ), */
+                                elevation: 0,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
                             ),
                           ),
                         ],
@@ -1382,7 +1415,21 @@ class _CreateWidgetState extends State<CreateWidget>
                     itemCount: listnumber.length,
                     itemBuilder: (context, listnumberIndex) {
                       final listnumberItem = listnumber[listnumberIndex];
-                      return Slidable(
+                      return Container(
+                        decoration: BoxDecoration(
+
+
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomCenter,
+                            colors: [Color.fromRGBO(170, 224, 221, 1), Color.fromRGBO(253, 255, 241, 1)],
+                            ),
+                          borderRadius: BorderRadius.circular(8),
+                          
+
+                        ),
+                      
+                      child:Slidable(
                         endActionPane: ActionPane(
                           motion: const ScrollMotion(),
                           extentRatio: 0.84,
@@ -1390,8 +1437,9 @@ class _CreateWidgetState extends State<CreateWidget>
                             SlidableAction(
                               label: 'Color',
                               backgroundColor:
-                                  FlutterFlowTheme.of(context).secondary,
+                                  Color.fromRGBO(125, 209, 212, 1),
                               icon: Icons.color_lens,
+                              // borderRadius: BorderRadius.circular(20),
                               onPressed: (_) async {
                                 final _colorPickedColor =
                                     await showFFColorPicker(
@@ -1429,8 +1477,9 @@ class _CreateWidgetState extends State<CreateWidget>
                             SlidableAction(
                               label: 'Update',
                               backgroundColor:
-                                  FlutterFlowTheme.of(context).tertiary,
+                                  Color.fromRGBO(203, 202, 205, 1),
                               icon: Icons.mode,
+                              // borderRadius: BorderRadius.circular(20),
                               onPressed: (_) async {
                                 FFAppState().updateLineAtIndex(
                                   listnumberIndex,
@@ -1472,6 +1521,7 @@ class _CreateWidgetState extends State<CreateWidget>
                               backgroundColor:
                                   FlutterFlowTheme.of(context).error,
                               icon: Icons.delete_outline_rounded,
+                              // borderRadius: BorderRadius.circular(20),
                               onPressed: (_) async {
                                 FFAppState().removeFromLine(listnumberItem);
                                 FFAppState().removeAtIndexFromTimelistA1(
@@ -1530,22 +1580,27 @@ class _CreateWidgetState extends State<CreateWidget>
                                   ),
                             ),
                             trailing: Icon(
-                              Icons.lens_rounded,
+                              Mikufamily.miku_icon,
                               color: FFAppState()
                                   .color
                                   .elementAtOrNull(listnumberIndex),
-                              size: 35,
+                              size: 45,
                             ),
-                            tileColor: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
+                              
+
+
+
+
+                            tileColor: Colors.transparent,
                             dense: false,
                             contentPadding:
                                 EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(0),
                             ),
                           ),
                         ),
+                      ),
                       );
                     },
                   );
@@ -1562,60 +1617,86 @@ class _CreateWidgetState extends State<CreateWidget>
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).alternate,
                     borderRadius: BorderRadius.circular(40),
+
+                    image: DecorationImage(
+                      image: AssetImage(
+                          'assets/A04.png'),
+                      fit: BoxFit.cover,
+                    ),
+
+
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Builder(
-                        builder: (context) => Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              await showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (dialogContext) {
-                                  return Dialog(
-                                    elevation: 0,
-                                    insetPadding: EdgeInsets.zero,
-                                    backgroundColor: Colors.transparent,
-                                    alignment: AlignmentDirectional(0, 0)
-                                        .resolve(Directionality.of(context)),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        FocusScope.of(dialogContext).unfocus();
-                                        FocusManager.instance.primaryFocus
-                                            ?.unfocus();
-                                      },
-                                      child: YusheWidget(),
-                                    ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context).primary,
+                            borderRadius: BorderRadius.circular(25),
+
+                            image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/A02.gif'),
+                              fit: BoxFit.cover,
+                            ),
+
+
+                          ),
+                          child: Builder(
+                            builder: (context) => Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  await showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (dialogContext) {
+                                      return Dialog(
+                                        elevation: 0,
+                                        insetPadding: EdgeInsets.zero,
+                                        backgroundColor: Colors.transparent,
+                                        alignment: AlignmentDirectional(0, 0)
+                                            .resolve(Directionality.of(context)),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            FocusScope.of(dialogContext).unfocus();
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
+                                          },
+                                          child: YusheWidget(),
+                                        ),
+                                      );
+                                    },
                                   );
                                 },
-                              );
-                            },
-                            text: '存预设',
-                            options: FFButtonOptions(
-                              width: 50,
-                              height: 50,
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                              
-                              iconPadding: EdgeInsets.all(0),
-                              color: FlutterFlowTheme.of(context).primary,
-                              textStyle:TextStyle(fontWeight:FontWeight.bold),
-                              /* textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Inter Tight',
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    letterSpacing: 0.0,
-                                  ), */
-                              elevation: 0,
-                              borderRadius: BorderRadius.circular(24),
+                                text: '存预设',
+                                options: FFButtonOptions(
+                                  width: 50,
+                                  height: 50,
+                                  padding:
+                                      EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                  
+                                  iconPadding: EdgeInsets.all(0),
+                                  color: Color.fromRGBO(255, 150, 172, 0),
+                                  textStyle:TextStyle(fontWeight:FontWeight.bold,
+                                  color: Color.fromRGBO(253, 255, 241, 1)),
+                                  /* textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Inter Tight',
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        letterSpacing: 0.0,
+                                      ), */
+                                  elevation: 0,
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                showLoadingIndicator: false,
+                              ),
                             ),
-                            showLoadingIndicator: false,
                           ),
                         ),
                       ),
@@ -1678,7 +1759,7 @@ class _CreateWidgetState extends State<CreateWidget>
                                             0, 0, 0, 0),
                                         
                                         iconPadding: EdgeInsets.all(0),
-                                        color: Colors.white,
+                                        color: Color.fromRGBO(253, 255, 241, 1),
                                         textStyle:TextStyle(
                                           fontWeight:FontWeight.bold,
                                           color:FlutterFlowTheme.of(context).primary,),
@@ -1696,7 +1777,7 @@ class _CreateWidgetState extends State<CreateWidget>
                                         borderRadius: BorderRadius.circular(24),
                                         hoverColor: FlutterFlowTheme.of(context)
                                             .primary,
-                                        hoverTextColor: Colors.white,
+                                        hoverTextColor: Color.fromRGBO(253, 255, 241, 1),
                                       ),
                                     ),
                                   );
@@ -1743,7 +1824,22 @@ class _CreateWidgetState extends State<CreateWidget>
               alignment: AlignmentDirectional(-1, 1),
               child: Padding(
                 padding: EdgeInsets.all(20),
-                child: FFButtonWidget(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).error,
+                    borderRadius: BorderRadius.circular(8),
+
+                    image: DecorationImage(
+                      image: AssetImage(
+                          'assets/A02.gif'),
+                      fit: BoxFit.cover,
+                    ),
+
+
+
+                  ),
+                  child: 
+                FFButtonWidget(
                   onPressed: () async {
                     _model.a160 = (List<int> a1) {
                       return a1.map((item) => item * 60).toList();
@@ -1803,14 +1899,15 @@ class _CreateWidgetState extends State<CreateWidget>
                   icon: Icon(
                     Icons.home_rounded,
                     size: 24,
-                    color: Colors.white,
+                    color: Color.fromRGBO(253, 255, 241, 1),
                   ),
                   options: FFButtonOptions(
                     height: 40,
                     padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle:TextStyle(fontWeight:FontWeight.bold),
+                    color: Color.fromRGBO(125, 209, 212, 0),
+                    textStyle:TextStyle(fontWeight:FontWeight.bold,
+                      color: Color.fromRGBO(253, 255, 241, 1)),
                     /* textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Inter Tight',
                           color: Colors.white,
@@ -1820,6 +1917,7 @@ class _CreateWidgetState extends State<CreateWidget>
                     borderRadius: BorderRadius.circular(8),
                   ),
                   showLoadingIndicator: false,
+                ),
                 ),
               ),
             ),
@@ -1833,7 +1931,7 @@ class _CreateWidgetState extends State<CreateWidget>
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onPanStart: (_) => windowManager.startDragging(),
-                child: Container(color: Colors.red),
+                child: Container(color: Color.fromRGBO(125, 209, 212, 1)),
               ),
             )
           

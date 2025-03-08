@@ -324,6 +324,21 @@ class _HomePageWidgetState extends State<HomePageWidget>
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: Stack(
           children: [
+
+
+
+
+            Positioned.fill(
+              child: Image.asset(
+                'assets/B01.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+
+
+
+
+
             Align(
               alignment: AlignmentDirectional(1, 0),
               child: Container(
@@ -690,7 +705,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
               ),
             ),
             Opacity(
-              opacity: 0.6,
+              opacity: 1,
               child: Align(
                 alignment: AlignmentDirectional(1, 0),
                 child: Padding(
@@ -992,29 +1007,49 @@ class _HomePageWidgetState extends State<HomePageWidget>
               alignment: AlignmentDirectional(-1, 1),
               child: Padding(
                 padding: EdgeInsets.all(20),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    Navigator.pop(context);
-                  },
-                  text: '设置',
-                  icon: Icon(
-                    Icons.settings_rounded,
-                    size: 24,
-                    color: Colors.white,
-                  ),
-                  options: FFButtonOptions(
-                    height: 40,
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                    iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle:TextStyle(fontWeight:FontWeight.bold),
-                    /* textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Inter Tight',
-                          color: Colors.white,
-                          letterSpacing: 0.0,
-                        ), */
-                    elevation: 0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).error,
                     borderRadius: BorderRadius.circular(8),
+
+
+
+                    image: DecorationImage(
+                      image: AssetImage(
+                          'assets/A02.gif'),
+                      fit: BoxFit.cover,
+                    ),
+
+
+
+
+
+                  ),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                    },
+                    text: '设置',
+                    icon: Icon(
+                      Icons.settings_rounded,
+                      size: 24,
+                      color: Color.fromRGBO(253, 255, 241, 1),
+                    ),
+                    options: FFButtonOptions(
+                      height: 40,
+                      padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                      color: Color.fromRGBO(125, 209, 212, 0),
+                      textStyle:TextStyle(fontWeight:FontWeight.bold,
+                      color: Color.fromRGBO(253, 255, 241, 1)),
+                      /* textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                            fontFamily: 'Inter Tight',
+                            color: Colors.white,
+                            letterSpacing: 0.0,
+                          ), */
+                      elevation: 0,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                 ),
               ),
@@ -1030,10 +1065,30 @@ class _HomePageWidgetState extends State<HomePageWidget>
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onPanStart: (_) => windowManager.startDragging(),
-                child: Container(color: Colors.red),
+                child: Container(color: Color.fromRGBO(125, 209, 212, 1)),
+              ),
+            ),
+          
+            Align(
+              alignment: AlignmentDirectional(0, 0),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 40, 16),
+                child: Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                  
+                    image: DecorationImage(                  
+                      image: AssetImage('assets/B02.ico'), 
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+
+                ),
               ),
             )
-          
+
+
           ],
         ),
       ),

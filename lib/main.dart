@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'dart:io';
 
+// import 'package:ex1/pagec.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'create/create_widget.dart'; // 导入Widget文件
 
 import 'package:provider/provider.dart';
@@ -14,7 +16,9 @@ import 'package:window_manager/window_manager.dart';
 import '/tray_utils.dart';
 import '/tray_wather.dart';
 
-import '/pageC.dart';
+import '/pagec.dart';
+
+
 
 
 void main() async {
@@ -79,6 +83,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+
+
+
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate, // Material组件本地化
+        GlobalWidgetsLocalizations.delegate,   // 基础Widget本地化（如文本方向）
+        
+      ],
+      
+      locale: const Locale('zh', 'CN'), // 设置默认语言
+      // 其他配置...
+
+
+
+
+
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -91,7 +112,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const TrayWatcher(child: CreateWidget(),),
         '/second': (context) => const TrayWatcher(child: HomePageWidget(),),
-        '/cc': (context) => const TrayWatcher(child: PageC(),),
+        '/cc': (context) => const TrayWatcher(child: PageCWidget(),),
       },
 
 
