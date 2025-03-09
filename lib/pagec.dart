@@ -269,8 +269,8 @@ class _PageCWidgtState extends State<PageCWidget> with WindowListener{
                                   .titleLarge
                                   .override(
                                     fontFamily: 'Inter Tight',
-                                    fontSize: 42,
-                                    letterSpacing: 0.2,
+                                    fontSize: 41,
+                                    letterSpacing: 0.1,
                                   ),
 
                                   /* style:TextStyle(fontWeight:FontWeight.bold,

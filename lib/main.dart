@@ -18,18 +18,33 @@ import '/tray_wather.dart';
 
 import '/pagec.dart';
 
+import 'package:windows_single_instance/windows_single_instance.dart';
+
+import 'package:tray_manager/tray_manager.dart';
 
 
 
-void main() async {
+
+void main(List<String> args) async {
 
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  await WindowsSingleInstance.ensureSingleInstance(
+        args,
+        "custom_identifier",
+        onSecondWindow: (args) {
+            print(args);
+        });
+
+
   // 必须加上这一行。
   await windowManager.ensureInitialized();
   // 初始化窗口置顶状态（可选）
   await windowManager.setAlwaysOnTop(true);
   await windowManager.setResizable(false);
+
+  
   
 
   // originalMinSize = const Size(400, 850); // 替换为你的默认最小值
@@ -60,6 +75,8 @@ void main() async {
 
   // 初始化系统托盘
   await initSystemTray();
+
+  await trayManager.setToolTip('💚MikuDay💚');
 
   
 }

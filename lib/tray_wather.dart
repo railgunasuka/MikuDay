@@ -33,7 +33,7 @@ class _TrayWatcherState extends State<TrayWatcher> with TrayListener {
   @override
   void onTrayIconRightMouseDown() async {
     // 右键点击，打开菜单
-    await trayManager.popUpContextMenu();
+    await trayManager.popUpContextMenu(bringAppToFront:true);
   }
 
   @override

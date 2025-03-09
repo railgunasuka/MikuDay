@@ -5,7 +5,7 @@ import 'package:window_manager/window_manager.dart';
 
 Future<void> initSystemTray() async {
   // 设置系统托盘图标
-  await trayManager.setIcon("assets/app_icon.ico");
+  await trayManager.setIcon("assets/cong.ico");
   // 新建菜单
   List<MenuItem> items = [
     
