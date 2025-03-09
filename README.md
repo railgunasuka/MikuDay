@@ -1,6 +1,10 @@
 # ex1
 
-A new Flutter project.
+♥预设存档在
+C:\Users\你的用户名\AppData\Roaming\com.example
+♥表情包来自miratsu
+https://space.bilibili.com/3546769371695776
+
 
 ## Getting Started
 
