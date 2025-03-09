@@ -206,6 +206,7 @@ class _PageCWidgtState extends State<PageCWidget> with WindowListener{
                   backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
                   body: Stack(
                     children: [
+
                       Container(
                         width: 100,
                         height: 100,
@@ -214,7 +215,31 @@ class _PageCWidgtState extends State<PageCWidget> with WindowListener{
                           minHeight: double.infinity,
                         ),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(84, 93, 110, 1),
+                          color: Color.fromRGBO(253, 255, 241, 1),
+
+
+                          image: DecorationImage(
+                            
+                            image: AssetImage('assets/TEST.png'), 
+                            fit: BoxFit.fitHeight,
+                          ),
+
+
+
+
+                        ),
+                      ),
+
+
+                      Container(
+                        width: 100,
+                        height: 100,
+                        constraints: BoxConstraints(
+                          minWidth: double.infinity,
+                          minHeight: double.infinity,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
 
 
                           image: DecorationImage(
@@ -231,7 +256,7 @@ class _PageCWidgtState extends State<PageCWidget> with WindowListener{
                       Align(
                           alignment: AlignmentDirectional(0, -1),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -240,9 +265,18 @@ class _PageCWidgtState extends State<PageCWidget> with WindowListener{
                                 Text(
                                   _timeString,
 
-                                  style:TextStyle(fontWeight:FontWeight.bold,
+                                  style: FlutterFlowTheme.of(context)
+                                  .titleLarge
+                                  .override(
+                                    fontFamily: 'Inter Tight',
+                                    fontSize: 42,
+                                    letterSpacing: 0.2,
+                                  ),
+
+                                  /* style:TextStyle(fontWeight:FontWeight.bold,
                                       color: Color.fromRGBO(125, 209, 212, 1),
-                                      fontSize: 30),
+                                      fontSize: 30), */
+
 
 
                                   /* style: FlutterFlowTheme.of(context).displayLarge.override(
@@ -255,9 +289,17 @@ class _PageCWidgtState extends State<PageCWidget> with WindowListener{
                                 Text(
                                   _dateString,
 
-                                  style:TextStyle(fontWeight:FontWeight.bold,
+                                  style: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    fontSize: 14.5,
+                                    letterSpacing: 0.0,
+                                  ),
+
+                                  /* style:TextStyle(fontWeight:FontWeight.bold,
                                       color: Color.fromRGBO(125, 209, 212, 1),
-                                      fontSize: 12),
+                                      fontSize: 12), */
 
 
                                   /* style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -268,8 +310,44 @@ class _PageCWidgtState extends State<PageCWidget> with WindowListener{
                                       ), */
 
                                 ),
+
+                                Container(
+                                  width: 100,
+                                  height: 32,
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+
+                                Text(
+                                  'ヾ( ˃ᴗ˂ )◞ • *✰',
+                                  style: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    color: Color.fromRGBO(0, 0, 0, 0.7),
+                                    fontSize: 14.5,
+                                    letterSpacing: 0.0,
+                                  ),
+                                ),
+
+
+                                /* Text(
+                                  '▶• ılıılıılıılıılıılı. 🥬',
+                                  style: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    color: Color.fromRGBO(0, 0, 0, 0.5),
+                                    fontSize: 12,
+                                    letterSpacing: 0.0,
+                                  ),
+                                ) */
                             
-                            
+
+
+
+
                             ].divide(SizedBox(height: 0)),
                           ),
                         ),

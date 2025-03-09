@@ -330,7 +330,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
 
             Positioned.fill(
               child: Image.asset(
-                'assets/B01.png',
+                'assets/TEST.png',
                 fit: BoxFit.cover,
               ),
             ),
@@ -1069,7 +1069,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
               ),
             ),
           
-            Align(
+            /* Align(
               alignment: AlignmentDirectional(0, 0),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 40, 16),
@@ -1086,7 +1086,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
 
                 ),
               ),
-            )
+            ) */
 
 
           ],

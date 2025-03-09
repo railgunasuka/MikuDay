@@ -195,10 +195,26 @@ class _CreateWidgetState extends State<CreateWidget>
 
             Positioned.fill(
               child: Image.asset(
-                'assets/A03.jpg',
+                'assets/TEST.png',
                 fit: BoxFit.cover,
               ),
             ),
+            /* Positioned.fill(
+              child: Transform.scale(
+                scale: 1.02, // 放大倍数（1.0 为原始大小）
+    
+  
+                child: RotatedBox(
+                  quarterTurns: 2, // 每 1 个 quarterTurn 代表 90 度，2 代表 180 度
+                  child: Image.asset(
+                    'assets/TEST.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+            ),
+            ), */
+
+            
 
 
             Align(
@@ -1259,7 +1275,7 @@ class _CreateWidgetState extends State<CreateWidget>
                                       fontFamily: 'Inter',
                                       letterSpacing: 0.0,
                                     ),
-                                hintText: 'TextField',
+                                hintText: 'ヾ( ˃ᴗ˂ )◞ • *✰',
                                 hintStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
@@ -1415,21 +1431,7 @@ class _CreateWidgetState extends State<CreateWidget>
                     itemCount: listnumber.length,
                     itemBuilder: (context, listnumberIndex) {
                       final listnumberItem = listnumber[listnumberIndex];
-                      return Container(
-                        decoration: BoxDecoration(
-
-
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomCenter,
-                            colors: [Color.fromRGBO(170, 224, 221, 1), Color.fromRGBO(253, 255, 241, 1)],
-                            ),
-                          borderRadius: BorderRadius.circular(8),
-                          
-
-                        ),
-                      
-                      child:Slidable(
+                      return Slidable(
                         endActionPane: ActionPane(
                           motion: const ScrollMotion(),
                           extentRatio: 0.84,
@@ -1539,7 +1541,21 @@ class _CreateWidgetState extends State<CreateWidget>
                             ),
                           ],
                         ),
-                        child: Material(
+                        child: Container(
+                        decoration: BoxDecoration(
+
+
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomCenter,
+                            colors: [Color.fromRGBO(170, 224, 221, 1), Color.fromRGBO(253, 255, 241, 1)],
+                            ),
+                          borderRadius: BorderRadius.circular(8),
+                          
+
+                        ),
+                      
+                      child:Material(
                           color: Colors.transparent,
                           child: ListTile(
                             title: Text(
@@ -1594,7 +1610,7 @@ class _CreateWidgetState extends State<CreateWidget>
                             tileColor: Colors.transparent,
                             dense: false,
                             contentPadding:
-                                EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                                EdgeInsetsDirectional.fromSTEB(12, 0, 15, 0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(0),
                             ),
