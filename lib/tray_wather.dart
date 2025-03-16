@@ -46,6 +46,14 @@ class _TrayWatcherState extends State<TrayWatcher> with TrayListener {
   @override
   Future<void> onTrayMenuItemClick(MenuItem menuItem) async {
     switch (menuItem.key) {
+
+
+      case 'hide':
+        windowManager.hide();
+        break;
+
+
+
       
       case 'toggle_top':
         bool isAlwaysOnTop = await windowManager.isAlwaysOnTop();

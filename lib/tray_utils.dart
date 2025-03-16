@@ -8,6 +8,12 @@ Future<void> initSystemTray() async {
   await trayManager.setIcon("assets/cong.ico");
   // 新建菜单
   List<MenuItem> items = [
+
+
+    MenuItem(
+      key: 'hide',
+      label: '隐藏',
+    ),
     
     
 
