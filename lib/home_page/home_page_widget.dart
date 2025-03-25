@@ -212,6 +212,24 @@ class _HomePageWidgetState extends State<HomePageWidget>
 
         _model.time = getCurrentTimestamp;
         safeSetState(() {});
+
+
+
+
+        _model.timechange = (DateTime.fromMillisecondsSinceEpoch(
+                          getCurrentTimestamp.secondsSinceEpoch * 1000)
+                      .hour *
+                  60) +
+              DateTime.fromMillisecondsSinceEpoch(
+                      getCurrentTimestamp.secondsSinceEpoch * 1000)
+                  .minute -
+              720;
+        safeSetState(() {});
+
+
+
+
+
         if (_model.toplist.toList().contains(((DateTime.fromMillisecondsSinceEpoch(
                             getCurrentTimestamp.secondsSinceEpoch * 1000)
                         .hour *
@@ -693,9 +711,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     enlargeFactor: 0,
                     enableInfiniteScroll: true,
                     scrollDirection: Axis.vertical,
-                    autoPlay: true,
-                    autoPlayAnimationDuration: Duration(milliseconds: 86400000),
-                    autoPlayInterval: Duration(milliseconds: (86400000 + 0)),
+                    autoPlay: false,
+                    autoPlayAnimationDuration: Duration(milliseconds: 8640),
+                    autoPlayInterval: Duration(milliseconds: (8640 + 0)),
                     autoPlayCurve: Curves.linear,
                     pauseAutoPlayInFiniteScroll: true,
                     onPageChanged: (index, _) =>
@@ -879,9 +897,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                         enlargeFactor: 0,
                         enableInfiniteScroll: true,
                         scrollDirection: Axis.vertical,
-                        autoPlay: true,
-                        autoPlayAnimationDuration: Duration(milliseconds: 86400000),
-                        autoPlayInterval: Duration(milliseconds: (86400000 + 0)),
+                        autoPlay: false,
+                        autoPlayAnimationDuration: Duration(milliseconds: 8640),
+                        autoPlayInterval: Duration(milliseconds: (8640 + 0)),
                         autoPlayCurve: Curves.linear,
                         pauseAutoPlayInFiniteScroll: true,
                         onPageChanged: (index, _) =>
