@@ -67,9 +67,12 @@ void main(List<String> args) async {
   final appState = FFAppState(); // Initialize FFAppState
   
   runApp(
+    // 顶层状态管理 + 托盘管理
     ChangeNotifierProvider(
-      create: (context) => appState..loadItems(),// 创建全局状态实例
-      child: MyApp(),
+      create: (context) => appState..loadItems(), // 初始化全局状态
+      child: TrayWatcher(  // 全局托盘管理
+        child: MyApp(),   // 主应用入口
+      ),
     ),
   );
 
@@ -127,9 +130,9 @@ class MyApp extends StatelessWidget {
             // 命名路由配置 */
       
       routes: {
-        '/': (context) => const TrayWatcher(child: CreateWidget(),),
-        '/second': (context) => const TrayWatcher(child: HomePageWidget(),),
-        '/cc': (context) => const TrayWatcher(child: PageCWidget(),),
+        '/': (context) => CreateWidget(),       // 移除 TrayWatcher 包裹
+        '/second': (context) => HomePageWidget(),
+        '/cc': (context) => PageCWidget(),
       },
 
 
