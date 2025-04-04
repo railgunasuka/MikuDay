@@ -10,14 +10,15 @@ import 'package:flutter/scheduler.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
 
-import 'package:window_manager/window_manager.dart';
+// 只在Windows平台导入相关包
+import 'package:window_manager/window_manager.dart'
+    if (dart.library.html) 'dart:html';
 
 import '/app_state.dart';
 
 import 'dart:async';
-
-
 
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({super.key});
@@ -121,17 +122,12 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   void dispose() {}
 }
 
-
 class _HomePageWidgetState extends State<HomePageWidget>
     with TickerProviderStateMixin {
   late HomePageModel _model;
 
-
   Timer? _timer;
   int _counter = 0;
-
-
-
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -141,101 +137,111 @@ class _HomePageWidgetState extends State<HomePageWidget>
   void initState() {
     super.initState();
 
-
     _model = createModel(context, () => HomePageModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.a160 = (List<int> a1) {
-        return a1.map((item) => item * 60).toList();
-      }(FFAppState().timelistA1.toList())
-          .toList()
-          .cast<int>();
+      _model.a160 =
+          (List<int> a1) {
+            return a1.map((item) => item * 60).toList();
+          }(FFAppState().timelistA1.toList()).toList().cast<int>();
       safeSetState(() {});
-      _model.b160 = (List<int> b1) {
-        return b1.map((item) => item * 60).toList();
-      }(FFAppState().timelistB1.toList())
-          .toList()
-          .cast<int>();
+      _model.b160 =
+          (List<int> b1) {
+            return b1.map((item) => item * 60).toList();
+          }(FFAppState().timelistB1.toList()).toList().cast<int>();
       safeSetState(() {});
-      _model.toplist = (List<int> a160, List<int> a2) {
-        return List.generate(a160.length, (index) => a160[index] + a2[index]);
-      }(_model.a160.toList(), FFAppState().timelistA2.toList())
-          .toList()
-          .cast<int>();
+      _model.toplist =
+          (List<int> a160, List<int> a2) {
+            return List.generate(
+              a160.length,
+              (index) => a160[index] + a2[index],
+            );
+          }(
+            _model.a160.toList(),
+            FFAppState().timelistA2.toList(),
+          ).toList().cast<int>();
       safeSetState(() {});
-      _model.endlist = (List<int> b160, List<int> b2) {
-        return List.generate(b160.length, (index) => b160[index] + b2[index]);
-      }(_model.b160.toList(), FFAppState().timelistB2.toList())
-          .toList()
-          .cast<int>();
+      _model.endlist =
+          (List<int> b160, List<int> b2) {
+            return List.generate(
+              b160.length,
+              (index) => b160[index] + b2[index],
+            );
+          }(
+            _model.b160.toList(),
+            FFAppState().timelistB2.toList(),
+          ).toList().cast<int>();
       safeSetState(() {});
-      _model.et = (List<int> toplist, List<int> endlist) {
-        return List.generate(
-            toplist.length, (index) => endlist[index] - toplist[index]);
-      }(_model.toplist.toList(), _model.endlist.toList())
-          .toList()
-          .cast<int>();
+      _model.et =
+          (List<int> toplist, List<int> endlist) {
+            return List.generate(
+              toplist.length,
+              (index) => endlist[index] - toplist[index],
+            );
+          }(
+            _model.toplist.toList(),
+            _model.endlist.toList(),
+          ).toList().cast<int>();
       safeSetState(() {});
-      _model.et100 = (List<int> et) {
-        return et.map((item) => item / 1440).toList();
-      }(_model.et.toList())
-          .toList()
-          .cast<double>();
+      _model.et100 =
+          (List<int> et) {
+            return et.map((item) => item / 1440).toList();
+          }(_model.et.toList()).toList().cast<double>();
       safeSetState(() {});
-      _model.space = (List<int> toplist, List<int> endlist) {
-        return List.generate(toplist.length,
-            (i) => i == 0 ? toplist[i] : toplist[i] - endlist[i - 1]);
-      }(_model.toplist.toList(), _model.endlist.toList())
-          .toList()
-          .cast<int>();
+      _model.space =
+          (List<int> toplist, List<int> endlist) {
+            return List.generate(
+              toplist.length,
+              (i) => i == 0 ? toplist[i] : toplist[i] - endlist[i - 1],
+            );
+          }(
+            _model.toplist.toList(),
+            _model.endlist.toList(),
+          ).toList().cast<int>();
       safeSetState(() {});
-      _model.space100 = (List<int> space) {
-        return space.map((item) => item / 1440).toList();
-      }(_model.space.toList())
-          .toList()
-          .cast<double>();
+      _model.space100 =
+          (List<int> space) {
+            return space.map((item) => item / 1440).toList();
+          }(_model.space.toList()).toList().cast<double>();
       safeSetState(() {});
-      _model.timechange = (DateTime.fromMillisecondsSinceEpoch(
-                      getCurrentTimestamp.secondsSinceEpoch * 1000)
-                  .hour *
+      _model.timechange =
+          (DateTime.fromMillisecondsSinceEpoch(
+                getCurrentTimestamp.secondsSinceEpoch * 1000,
+              ).hour *
               60) +
           DateTime.fromMillisecondsSinceEpoch(
-                  getCurrentTimestamp.secondsSinceEpoch * 1000)
-              .minute -
+            getCurrentTimestamp.secondsSinceEpoch * 1000,
+          ).minute -
           720;
       safeSetState(() {});
       Future<void> _executeAction() async {
         setState(() => _counter++);
         // print('执行操作，当前计数: $_counter');
 
-
         _model.time = getCurrentTimestamp;
         safeSetState(() {});
 
-
-
-
-        _model.timechange = (DateTime.fromMillisecondsSinceEpoch(
-                          getCurrentTimestamp.secondsSinceEpoch * 1000)
-                      .hour *
-                  60) +
-              DateTime.fromMillisecondsSinceEpoch(
-                      getCurrentTimestamp.secondsSinceEpoch * 1000)
-                  .minute -
-              720;
+        _model.timechange =
+            (DateTime.fromMillisecondsSinceEpoch(
+                  getCurrentTimestamp.secondsSinceEpoch * 1000,
+                ).hour *
+                60) +
+            DateTime.fromMillisecondsSinceEpoch(
+              getCurrentTimestamp.secondsSinceEpoch * 1000,
+            ).minute -
+            720;
         safeSetState(() {});
 
-
-
-
-
-        if (_model.toplist.toList().contains(((DateTime.fromMillisecondsSinceEpoch(
-                            getCurrentTimestamp.secondsSinceEpoch * 1000)
-                        .hour *
-                    60) +
-                DateTime.fromMillisecondsSinceEpoch(getCurrentTimestamp.secondsSinceEpoch * 1000)
-                    .minute))) {
+        if (_model.toplist.toList().contains(
+          ((DateTime.fromMillisecondsSinceEpoch(
+                    getCurrentTimestamp.secondsSinceEpoch * 1000,
+                  ).hour *
+                  60) +
+              DateTime.fromMillisecondsSinceEpoch(
+                getCurrentTimestamp.secondsSinceEpoch * 1000,
+              ).minute),
+        )) {
           if (animationsMap['containerOnActionTriggerAnimation1'] != null) {
             await animationsMap['containerOnActionTriggerAnimation1']!
                 .controller
@@ -248,13 +254,14 @@ class _HomePageWidgetState extends State<HomePageWidget>
                 .reverse();
           }
         } else if (_model.endlist.toList().contains(
-                ((DateTime.fromMillisecondsSinceEpoch(
-                                getCurrentTimestamp.secondsSinceEpoch * 1000)
-                            .hour *
-                        60) +
-                    DateTime.fromMillisecondsSinceEpoch(
-                            getCurrentTimestamp.secondsSinceEpoch * 1000)
-                        .minute))) {
+          ((DateTime.fromMillisecondsSinceEpoch(
+                    getCurrentTimestamp.secondsSinceEpoch * 1000,
+                  ).hour *
+                  60) +
+              DateTime.fromMillisecondsSinceEpoch(
+                getCurrentTimestamp.secondsSinceEpoch * 1000,
+              ).minute),
+        )) {
           if (animationsMap['containerOnActionTriggerAnimation2'] != null) {
             await animationsMap['containerOnActionTriggerAnimation2']!
                 .controller
@@ -268,6 +275,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
           }
         }
       }
+
       _executeAction();
       // 定时器复用同一函数
       _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
@@ -279,39 +287,41 @@ class _HomePageWidgetState extends State<HomePageWidget>
       'containerOnActionTriggerAnimation1': AnimationInfo(
         trigger: AnimationTrigger.onActionTrigger,
         applyInitialState: true,
-        effectsBuilder: () => [
-          ScaleEffect(
-            curve: Curves.elasticOut,
-            delay: 0.0.ms,
-            duration: 500.0.ms,
-            begin: Offset(0.0, 0.0),
-            end: Offset(1.0, 1.0),
-          ),
-        ],
+        effectsBuilder:
+            () => [
+              ScaleEffect(
+                curve: Curves.elasticOut,
+                delay: 0.0.ms,
+                duration: 500.0.ms,
+                begin: Offset(0.0, 0.0),
+                end: Offset(1.0, 1.0),
+              ),
+            ],
       ),
       'containerOnActionTriggerAnimation2': AnimationInfo(
         trigger: AnimationTrigger.onActionTrigger,
         applyInitialState: true,
-        effectsBuilder: () => [
-          ScaleEffect(
-            curve: Curves.elasticOut,
-            delay: 0.0.ms,
-            duration: 500.0.ms,
-            begin: Offset(0.0, 0.0),
-            end: Offset(1.0, 1.0),
-          ),
-        ],
+        effectsBuilder:
+            () => [
+              ScaleEffect(
+                curve: Curves.elasticOut,
+                delay: 0.0.ms,
+                duration: 500.0.ms,
+                begin: Offset(0.0, 0.0),
+                end: Offset(1.0, 1.0),
+              ),
+            ],
       ),
     });
     setupAnimations(
-      animationsMap.values.where((anim) =>
-          anim.trigger == AnimationTrigger.onActionTrigger ||
-          !anim.applyInitialState),
+      animationsMap.values.where(
+        (anim) =>
+            anim.trigger == AnimationTrigger.onActionTrigger ||
+            !anim.applyInitialState,
+      ),
       this,
     );
   }
-
-
 
   @override
   void dispose() {
@@ -332,30 +342,21 @@ class _HomePageWidgetState extends State<HomePageWidget>
         FocusManager.instance.primaryFocus?.unfocus();
       },
 
-
-      onSecondaryTap: () => Navigator.pushNamed(context, '/cc'),
-
-
+      onSecondaryTap: () {
+        if (Platform.isWindows) {
+          Navigator.pushNamed(context, '/cc');
+        }
+      },
 
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Stack(
+        backgroundColor: FlutterFlowTheme.of(context).primary,
+        body: 
+        Stack(
           children: [
-
-
-
-
             Positioned.fill(
-              child: Image.asset(
-                'assets/TEST.png',
-                fit: BoxFit.cover,
-              ),
+              child: Image.asset('assets/TEST.png', fit: BoxFit.cover),
             ),
-
-
-
-
 
             Align(
               alignment: AlignmentDirectional(1, 0),
@@ -370,11 +371,12 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           alignment: AlignmentDirectional(1, 0),
                           child: Transform.translate(
                             offset: Offset(
-                                0,
-                                -_model.timechange /
-                                        1440 *
-                                        MediaQuery.sizeOf(context).height +
-                                    MediaQuery.sizeOf(context).height),
+                              0,
+                              -_model.timechange /
+                                      1440 *
+                                      MediaQuery.sizeOf(context).height +
+                                  MediaQuery.sizeOf(context).height,
+                            ),
                             child: Container(
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context).alternate,
@@ -386,85 +388,101 @@ class _HomePageWidgetState extends State<HomePageWidget>
 
                                   return Column(
                                     mainAxisSize: MainAxisSize.max,
-                                    children: List.generate(timelist.length,
-                                        (timelistIndex) {
+                                    children: List.generate(timelist.length, (
+                                      timelistIndex,
+                                    ) {
                                       final timelistItem =
                                           timelist[timelistIndex];
                                       return Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            5,
-                                            valueOrDefault<double>(
-                                              ((double sheight,
-                                                          List<double> space100) {
-                                                return space100
-                                                    .map((item) =>
-                                                        item * sheight)
-                                                    .toList();
-                                              }(
-                                                      MediaQuery.sizeOf(context)
-                                                          .height,
-                                                      _model.space100.toList()))
-                                                  .elementAtOrNull(
-                                                      timelistIndex),
-                                              0.0,
-                                            ),
-                                            5,
-                                            0),
+                                          5,
+                                          valueOrDefault<double>(
+                                            ((
+                                              double sheight,
+                                              List<double> space100,
+                                            ) {
+                                              return space100
+                                                  .map((item) => item * sheight)
+                                                  .toList();
+                                            }(
+                                              MediaQuery.sizeOf(context).height,
+                                              _model.space100.toList(),
+                                            )).elementAtOrNull(timelistIndex),
+                                            0.0,
+                                          ),
+                                          5,
+                                          0,
+                                        ),
                                         child: Container(
                                           width: 100,
-                                          height: ((double sheight,
-                                                      List<double> et100) {
+                                          height: ((
+                                            double sheight,
+                                            List<double> et100,
+                                          ) {
                                             return et100
                                                 .map((item) => item * sheight)
                                                 .toList();
-                                          }(MediaQuery.sizeOf(context).height,
-                                                  _model.et100.toList()))
-                                              .elementAtOrNull(timelistIndex),
+                                          }(
+                                            MediaQuery.sizeOf(context).height,
+                                            _model.et100.toList(),
+                                          )).elementAtOrNull(timelistIndex),
                                           decoration: BoxDecoration(
                                             color: ((List<Color> var1) {
                                               return var1
-                                                  .map((color) =>
-                                                      color.withOpacity(
-                                                          color.opacity * 0.5))
+                                                  .map(
+                                                    (color) =>
+                                                        color.withOpacity(
+                                                          color.opacity * 0.5,
+                                                        ),
+                                                  )
                                                   .toList();
-                                            }(FFAppState().color.toList()))
-                                                .elementAtOrNull(timelistIndex),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
+                                            }(
+                                              FFAppState().color.toList(),
+                                            )).elementAtOrNull(timelistIndex),
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
                                             border: Border.all(
                                               color: valueOrDefault<Color>(
-                                                FFAppState()
-                                                    .color
+                                                FFAppState().color
                                                     .elementAtOrNull(
-                                                        timelistIndex),
-                                                FlutterFlowTheme.of(context)
-                                                    .primary,
+                                                      timelistIndex,
+                                                    ),
+                                                FlutterFlowTheme.of(
+                                                  context,
+                                                ).primary,
                                               ),
                                             ),
                                           ),
                                           child: Align(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
+                                            alignment: AlignmentDirectional(
+                                              0,
+                                              0,
+                                            ),
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(2, 0, 2, 0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    2,
+                                                    0,
+                                                    2,
+                                                    0,
+                                                  ),
                                               child: AutoSizeText(
                                                 valueOrDefault<String>(
-                                                  FFAppState()
-                                                      .line
+                                                  FFAppState().line
                                                       .elementAtOrNull(
-                                                          timelistIndex),
+                                                        timelistIndex,
+                                                      ),
                                                   '空',
                                                 ),
                                                 textAlign: TextAlign.center,
                                                 minFontSize: 5,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          letterSpacing: 0.0,
-                                                        ),
+                                                style: FlutterFlowTheme.of(
+                                                  context,
+                                                ).bodyMedium.override(
+                                                  fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -481,11 +499,12 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           alignment: AlignmentDirectional(1, 0),
                           child: Transform.translate(
                             offset: Offset(
-                                0,
-                                -_model.timechange /
-                                        1440 *
-                                        MediaQuery.sizeOf(context).height -
-                                    MediaQuery.sizeOf(context).height),
+                              0,
+                              -_model.timechange /
+                                      1440 *
+                                      MediaQuery.sizeOf(context).height -
+                                  MediaQuery.sizeOf(context).height,
+                            ),
                             child: Container(
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context).alternate,
@@ -497,85 +516,101 @@ class _HomePageWidgetState extends State<HomePageWidget>
 
                                   return Column(
                                     mainAxisSize: MainAxisSize.max,
-                                    children: List.generate(timelist.length,
-                                        (timelistIndex) {
+                                    children: List.generate(timelist.length, (
+                                      timelistIndex,
+                                    ) {
                                       final timelistItem =
                                           timelist[timelistIndex];
                                       return Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            5,
-                                            valueOrDefault<double>(
-                                              ((double sheight,
-                                                          List<double> space100) {
-                                                return space100
-                                                    .map((item) =>
-                                                        item * sheight)
-                                                    .toList();
-                                              }(
-                                                      MediaQuery.sizeOf(context)
-                                                          .height,
-                                                      _model.space100.toList()))
-                                                  .elementAtOrNull(
-                                                      timelistIndex),
-                                              0.0,
-                                            ),
-                                            5,
-                                            0),
+                                          5,
+                                          valueOrDefault<double>(
+                                            ((
+                                              double sheight,
+                                              List<double> space100,
+                                            ) {
+                                              return space100
+                                                  .map((item) => item * sheight)
+                                                  .toList();
+                                            }(
+                                              MediaQuery.sizeOf(context).height,
+                                              _model.space100.toList(),
+                                            )).elementAtOrNull(timelistIndex),
+                                            0.0,
+                                          ),
+                                          5,
+                                          0,
+                                        ),
                                         child: Container(
                                           width: 100,
-                                          height: ((double sheight,
-                                                      List<double> et100) {
+                                          height: ((
+                                            double sheight,
+                                            List<double> et100,
+                                          ) {
                                             return et100
                                                 .map((item) => item * sheight)
                                                 .toList();
-                                          }(MediaQuery.sizeOf(context).height,
-                                                  _model.et100.toList()))
-                                              .elementAtOrNull(timelistIndex),
+                                          }(
+                                            MediaQuery.sizeOf(context).height,
+                                            _model.et100.toList(),
+                                          )).elementAtOrNull(timelistIndex),
                                           decoration: BoxDecoration(
                                             color: ((List<Color> var1) {
                                               return var1
-                                                  .map((color) =>
-                                                      color.withOpacity(
-                                                          color.opacity * 0.5))
+                                                  .map(
+                                                    (color) =>
+                                                        color.withOpacity(
+                                                          color.opacity * 0.5,
+                                                        ),
+                                                  )
                                                   .toList();
-                                            }(FFAppState().color.toList()))
-                                                .elementAtOrNull(timelistIndex),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
+                                            }(
+                                              FFAppState().color.toList(),
+                                            )).elementAtOrNull(timelistIndex),
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
                                             border: Border.all(
                                               color: valueOrDefault<Color>(
-                                                FFAppState()
-                                                    .color
+                                                FFAppState().color
                                                     .elementAtOrNull(
-                                                        timelistIndex),
-                                                FlutterFlowTheme.of(context)
-                                                    .primary,
+                                                      timelistIndex,
+                                                    ),
+                                                FlutterFlowTheme.of(
+                                                  context,
+                                                ).primary,
                                               ),
                                             ),
                                           ),
                                           child: Align(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
+                                            alignment: AlignmentDirectional(
+                                              0,
+                                              0,
+                                            ),
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(2, 0, 2, 0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    2,
+                                                    0,
+                                                    2,
+                                                    0,
+                                                  ),
                                               child: AutoSizeText(
                                                 valueOrDefault<String>(
-                                                  FFAppState()
-                                                      .line
+                                                  FFAppState().line
                                                       .elementAtOrNull(
-                                                          timelistIndex),
+                                                        timelistIndex,
+                                                      ),
                                                   '空',
                                                 ),
                                                 textAlign: TextAlign.center,
                                                 minFontSize: 5,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          letterSpacing: 0.0,
-                                                        ),
+                                                style: FlutterFlowTheme.of(
+                                                  context,
+                                                ).bodyMedium.override(
+                                                  fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -592,10 +627,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           alignment: AlignmentDirectional(1, 0),
                           child: Transform.translate(
                             offset: Offset(
-                                0,
-                                -_model.timechange /
-                                    1440 *
-                                    MediaQuery.sizeOf(context).height),
+                              0,
+                              -_model.timechange /
+                                  1440 *
+                                  MediaQuery.sizeOf(context).height,
+                            ),
                             child: Container(
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context).alternate,
@@ -607,85 +643,101 @@ class _HomePageWidgetState extends State<HomePageWidget>
 
                                   return Column(
                                     mainAxisSize: MainAxisSize.max,
-                                    children: List.generate(timelist.length,
-                                        (timelistIndex) {
+                                    children: List.generate(timelist.length, (
+                                      timelistIndex,
+                                    ) {
                                       final timelistItem =
                                           timelist[timelistIndex];
                                       return Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            5,
-                                            valueOrDefault<double>(
-                                              ((double sheight,
-                                                          List<double> space100) {
-                                                return space100
-                                                    .map((item) =>
-                                                        item * sheight)
-                                                    .toList();
-                                              }(
-                                                      MediaQuery.sizeOf(context)
-                                                          .height,
-                                                      _model.space100.toList()))
-                                                  .elementAtOrNull(
-                                                      timelistIndex),
-                                              0.0,
-                                            ),
-                                            5,
-                                            0),
+                                          5,
+                                          valueOrDefault<double>(
+                                            ((
+                                              double sheight,
+                                              List<double> space100,
+                                            ) {
+                                              return space100
+                                                  .map((item) => item * sheight)
+                                                  .toList();
+                                            }(
+                                              MediaQuery.sizeOf(context).height,
+                                              _model.space100.toList(),
+                                            )).elementAtOrNull(timelistIndex),
+                                            0.0,
+                                          ),
+                                          5,
+                                          0,
+                                        ),
                                         child: Container(
                                           width: 100,
-                                          height: ((double sheight,
-                                                      List<double> et100) {
+                                          height: ((
+                                            double sheight,
+                                            List<double> et100,
+                                          ) {
                                             return et100
                                                 .map((item) => item * sheight)
                                                 .toList();
-                                          }(MediaQuery.sizeOf(context).height,
-                                                  _model.et100.toList()))
-                                              .elementAtOrNull(timelistIndex),
+                                          }(
+                                            MediaQuery.sizeOf(context).height,
+                                            _model.et100.toList(),
+                                          )).elementAtOrNull(timelistIndex),
                                           decoration: BoxDecoration(
                                             color: ((List<Color> var1) {
                                               return var1
-                                                  .map((color) =>
-                                                      color.withOpacity(
-                                                          color.opacity * 0.5))
+                                                  .map(
+                                                    (color) =>
+                                                        color.withOpacity(
+                                                          color.opacity * 0.5,
+                                                        ),
+                                                  )
                                                   .toList();
-                                            }(FFAppState().color.toList()))
-                                                .elementAtOrNull(timelistIndex),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
+                                            }(
+                                              FFAppState().color.toList(),
+                                            )).elementAtOrNull(timelistIndex),
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
                                             border: Border.all(
                                               color: valueOrDefault<Color>(
-                                                FFAppState()
-                                                    .color
+                                                FFAppState().color
                                                     .elementAtOrNull(
-                                                        timelistIndex),
-                                                FlutterFlowTheme.of(context)
-                                                    .primary,
+                                                      timelistIndex,
+                                                    ),
+                                                FlutterFlowTheme.of(
+                                                  context,
+                                                ).primary,
                                               ),
                                             ),
                                           ),
                                           child: Align(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
+                                            alignment: AlignmentDirectional(
+                                              0,
+                                              0,
+                                            ),
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(2, 0, 2, 0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    2,
+                                                    0,
+                                                    2,
+                                                    0,
+                                                  ),
                                               child: AutoSizeText(
                                                 valueOrDefault<String>(
-                                                  FFAppState()
-                                                      .line
+                                                  FFAppState().line
                                                       .elementAtOrNull(
-                                                          timelistIndex),
+                                                        timelistIndex,
+                                                      ),
                                                   '空',
                                                 ),
                                                 textAlign: TextAlign.center,
                                                 minFontSize: 5,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          letterSpacing: 0.0,
-                                                        ),
+                                                style: FlutterFlowTheme.of(
+                                                  context,
+                                                ).bodyMedium.override(
+                                                  fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -701,8 +753,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
                       ],
                     ),
                   ],
-                  carouselController: _model.carouselController ??=
-                      CarouselSliderController(),
+                  carouselController:
+                      _model.carouselController ??= CarouselSliderController(),
                   options: CarouselOptions(
                     initialPage: 0,
                     viewportFraction: 1,
@@ -716,8 +768,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     autoPlayInterval: Duration(milliseconds: (8640 + 0)),
                     autoPlayCurve: Curves.linear,
                     pauseAutoPlayInFiniteScroll: true,
-                    onPageChanged: (index, _) =>
-                        _model.carouselCurrentIndex = index,
+                    onPageChanged:
+                        (index, _) => _model.carouselCurrentIndex = index,
                   ),
                 ),
               ),
@@ -739,11 +791,12 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               alignment: AlignmentDirectional(1, 0),
                               child: Transform.translate(
                                 offset: Offset(
-                                    0,
-                                    -_model.timechange /
-                                            1440 *
-                                            MediaQuery.sizeOf(context).height +
-                                        MediaQuery.sizeOf(context).height),
+                                  0,
+                                  -_model.timechange /
+                                          1440 *
+                                          MediaQuery.sizeOf(context).height +
+                                      MediaQuery.sizeOf(context).height,
+                                ),
                                 child: Builder(
                                   builder: (context) {
                                     final timescalnum =
@@ -755,31 +808,33 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                           MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,
-                                      children:
-                                          List.generate(timescalnum.length,
-                                              (timescalnumIndex) {
-                                        final timescalnumItem =
-                                            timescalnum[timescalnumIndex];
-                                        return Text(
-                                          valueOrDefault<String>(
-                                            FFAppState()
-                                                .timescale
-                                                .elementAtOrNull(
-                                                    timescalnumIndex),
-                                            '0',
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                fontSize: 7.5,
-                                                letterSpacing: 0.0,
-                                              ),
-                                        );
-                                      }),
+                                      children: List.generate(
+                                        timescalnum.length,
+                                        (timescalnumIndex) {
+                                          final timescalnumItem =
+                                              timescalnum[timescalnumIndex];
+                                          return Text(
+                                            valueOrDefault<String>(
+                                              FFAppState().timescale
+                                                  .elementAtOrNull(
+                                                    timescalnumIndex,
+                                                  ),
+                                              '0',
+                                            ),
+                                            style: FlutterFlowTheme.of(
+                                              context,
+                                            ).bodyMedium.override(
+                                              fontFamily: 'Inter',
+                                              color:
+                                                  FlutterFlowTheme.of(
+                                                    context,
+                                                  ).secondaryText,
+                                              fontSize: 7.5,
+                                              letterSpacing: 0.0,
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     );
                                   },
                                 ),
@@ -789,11 +844,12 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               alignment: AlignmentDirectional(1, 0),
                               child: Transform.translate(
                                 offset: Offset(
-                                    0,
-                                    -_model.timechange /
-                                            1440 *
-                                            MediaQuery.sizeOf(context).height -
-                                        MediaQuery.sizeOf(context).height),
+                                  0,
+                                  -_model.timechange /
+                                          1440 *
+                                          MediaQuery.sizeOf(context).height -
+                                      MediaQuery.sizeOf(context).height,
+                                ),
                                 child: Builder(
                                   builder: (context) {
                                     final timescalnum =
@@ -805,31 +861,33 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                           MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,
-                                      children:
-                                          List.generate(timescalnum.length,
-                                              (timescalnumIndex) {
-                                        final timescalnumItem =
-                                            timescalnum[timescalnumIndex];
-                                        return Text(
-                                          valueOrDefault<String>(
-                                            FFAppState()
-                                                .timescale
-                                                .elementAtOrNull(
-                                                    timescalnumIndex),
-                                            '0',
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                fontSize: 7.5,
-                                                letterSpacing: 0.0,
-                                              ),
-                                        );
-                                      }),
+                                      children: List.generate(
+                                        timescalnum.length,
+                                        (timescalnumIndex) {
+                                          final timescalnumItem =
+                                              timescalnum[timescalnumIndex];
+                                          return Text(
+                                            valueOrDefault<String>(
+                                              FFAppState().timescale
+                                                  .elementAtOrNull(
+                                                    timescalnumIndex,
+                                                  ),
+                                              '0',
+                                            ),
+                                            style: FlutterFlowTheme.of(
+                                              context,
+                                            ).bodyMedium.override(
+                                              fontFamily: 'Inter',
+                                              color:
+                                                  FlutterFlowTheme.of(
+                                                    context,
+                                                  ).secondaryText,
+                                              fontSize: 7.5,
+                                              letterSpacing: 0.0,
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     );
                                   },
                                 ),
@@ -839,10 +897,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               alignment: AlignmentDirectional(1, 0),
                               child: Transform.translate(
                                 offset: Offset(
-                                    0,
-                                    -_model.timechange /
-                                        1440 *
-                                        MediaQuery.sizeOf(context).height),
+                                  0,
+                                  -_model.timechange /
+                                      1440 *
+                                      MediaQuery.sizeOf(context).height,
+                                ),
                                 child: Builder(
                                   builder: (context) {
                                     final timescalnum =
@@ -854,31 +913,33 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                           MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,
-                                      children:
-                                          List.generate(timescalnum.length,
-                                              (timescalnumIndex) {
-                                        final timescalnumItem =
-                                            timescalnum[timescalnumIndex];
-                                        return Text(
-                                          valueOrDefault<String>(
-                                            FFAppState()
-                                                .timescale
-                                                .elementAtOrNull(
-                                                    timescalnumIndex),
-                                            '0',
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                fontSize: 7.5,
-                                                letterSpacing: 0.0,
-                                              ),
-                                        );
-                                      }),
+                                      children: List.generate(
+                                        timescalnum.length,
+                                        (timescalnumIndex) {
+                                          final timescalnumItem =
+                                              timescalnum[timescalnumIndex];
+                                          return Text(
+                                            valueOrDefault<String>(
+                                              FFAppState().timescale
+                                                  .elementAtOrNull(
+                                                    timescalnumIndex,
+                                                  ),
+                                              '0',
+                                            ),
+                                            style: FlutterFlowTheme.of(
+                                              context,
+                                            ).bodyMedium.override(
+                                              fontFamily: 'Inter',
+                                              color:
+                                                  FlutterFlowTheme.of(
+                                                    context,
+                                                  ).secondaryText,
+                                              fontSize: 7.5,
+                                              letterSpacing: 0.0,
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     );
                                   },
                                 ),
@@ -887,8 +948,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           ],
                         ),
                       ],
-                      carouselController: _model.carousetimescaleController ??=
-                          CarouselSliderController(),
+                      carouselController:
+                          _model.carousetimescaleController ??=
+                              CarouselSliderController(),
                       options: CarouselOptions(
                         initialPage: 0,
                         viewportFraction: 1,
@@ -902,8 +964,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                         autoPlayInterval: Duration(milliseconds: (8640 + 0)),
                         autoPlayCurve: Curves.linear,
                         pauseAutoPlayInFiniteScroll: true,
-                        onPageChanged: (index, _) =>
-                            _model.carousetimescaleCurrentIndex = index,
+                        onPageChanged:
+                            (index, _) =>
+                                _model.carousetimescaleCurrentIndex = index,
                       ),
                     ),
                   ),
@@ -920,19 +983,20 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     alignment: AlignmentDirectional(0, 0),
                     child: Text(
                       dateTimeFormat("Hm", _model.time),
-                      style:
-                          FlutterFlowTheme.of(context).headlineLarge.override(
-                                fontFamily: 'Inter Tight',
-                                letterSpacing: 0.0,
-                              ),
+                      style: FlutterFlowTheme.of(
+                        context,
+                      ).headlineLarge.override(
+                        fontFamily: 'Inter Tight',
+                        letterSpacing: 0.0,
+                      ),
                     ),
                   ),
                   Text(
                     '     --------------------→                                ',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Inter',
-                          letterSpacing: 0.0,
-                        ),
+                      fontFamily: 'Inter',
+                      letterSpacing: 0.0,
+                    ),
                   ),
                 ],
               ),
@@ -942,11 +1006,12 @@ class _HomePageWidgetState extends State<HomePageWidget>
               child: Align(
                 alignment: AlignmentDirectional(1, 0),
                 child: FFButtonWidget(
-                  onPressed: true
-                      ? null
-                      : () {
-                          print('Button pressed ...');
-                        },
+                  onPressed:
+                      true
+                          ? null
+                          : () {
+                            print('Button pressed ...');
+                          },
                   text: 'Button',
                   options: FFButtonOptions(
                     width: 250,
@@ -955,10 +1020,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     color: FlutterFlowTheme.of(context).primary,
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Inter Tight',
-                          color: Colors.white,
-                          letterSpacing: 0.0,
-                        ),
+                      fontFamily: 'Inter Tight',
+                      color: Colors.white,
+                      letterSpacing: 0.0,
+                    ),
                     elevation: 0,
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -981,11 +1046,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     child: Text(
                       'start',
                       style: FlutterFlowTheme.of(context).bodySmall.override(
-                            fontFamily: 'Inter',
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            letterSpacing: 0.0,
-                          ),
+                        fontFamily: 'Inter',
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        letterSpacing: 0.0,
+                      ),
                     ),
                   ),
                 ).animateOnActionTrigger(
@@ -1009,11 +1073,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     child: Text(
                       'end',
                       style: FlutterFlowTheme.of(context).bodySmall.override(
-                            fontFamily: 'Inter',
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            letterSpacing: 0.0,
-                          ),
+                        fontFamily: 'Inter',
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        letterSpacing: 0.0,
+                      ),
                     ),
                   ),
                 ).animateOnActionTrigger(
@@ -1030,18 +1093,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     color: FlutterFlowTheme.of(context).error,
                     borderRadius: BorderRadius.circular(8),
 
-
-
                     image: DecorationImage(
-                      image: AssetImage(
-                          'assets/A02.gif'),
+                      image: AssetImage('assets/A02.gif'),
                       fit: BoxFit.cover,
                     ),
-
-
-
-
-
                   ),
                   child: FFButtonWidget(
                     onPressed: () async {
@@ -1058,8 +1113,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                       padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                       iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                       color: Color.fromRGBO(125, 209, 212, 0),
-                      textStyle:TextStyle(fontWeight:FontWeight.bold,
-                      color: Color.fromRGBO(253, 255, 241, 1)),
+                      textStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(253, 255, 241, 1),
+                      ),
                       /* textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                             fontFamily: 'Inter Tight',
                             color: Colors.white,
@@ -1072,21 +1129,21 @@ class _HomePageWidgetState extends State<HomePageWidget>
                 ),
               ),
             ),
-          
-          
-            // 顶部边缘拖动条
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              height: 10, // 仅10px高度的触发区域
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onPanStart: (_) => windowManager.startDragging(),
-                child: Container(color: Color.fromRGBO(125, 209, 212, 1)),
+
+            // 只在Windows平台显示顶部边缘拖动条
+            if (Platform.isWindows)
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                height: 10,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onPanStart: (_) => windowManager.startDragging(),
+                  child: Container(color: Color.fromRGBO(125, 209, 212, 1)),
+                ),
               ),
-            ),
-          
+
             /* Align(
               alignment: AlignmentDirectional(0, 0),
               child: Padding(
@@ -1105,12 +1162,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                 ),
               ),
             ) */
-
-
           ],
         ),
       ),
+      
     );
   }
 }
-

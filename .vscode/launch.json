@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Android Debug",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "emulator-5554", // 应改为实际设备ID（如 emulator-5554）
+            "args": ["--dart-define", "PLATFORM=android"]
+          },
+        {
             "name": "ex1",
             "request": "launch",
             "type": "dart"

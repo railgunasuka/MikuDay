@@ -93,7 +93,7 @@ class _YusheWidgetState extends State<YusheWidget> {
                               fontFamily: 'Inter',
                               letterSpacing: 0.0,
                             ),
-                    hintText: 'ヾ( ˃ᴗ˂ )◞ • *✰',
+                    hintText: 'ヾ( ˃◡˂ )◞ • *✰',
                     hintStyle:
                         FlutterFlowTheme.of(context).labelMedium.override(
                               fontFamily: 'Inter',

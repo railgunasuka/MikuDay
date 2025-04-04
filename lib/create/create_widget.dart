@@ -10,15 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutterflow_colorpicker/flutterflow_colorpicker.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'dart:io';
 
 import '/app_state.dart';
 
-import 'package:window_manager/window_manager.dart';
+import 'package:window_manager/window_manager.dart'
+    if (dart.library.html) 'dart:html';
 
 import '/mikufamily_icons.dart';
-
-
-
 
 class CreateWidget extends StatefulWidget {
   const CreateWidget({super.key});
@@ -29,8 +28,6 @@ class CreateWidget extends StatefulWidget {
   @override
   State<CreateWidget> createState() => _CreateWidgetState();
 }
-
-
 
 class CreateModel extends FlutterFlowModel<CreateWidget> {
   ///  Local state fields for this page.
@@ -119,12 +116,9 @@ class CreateModel extends FlutterFlowModel<CreateWidget> {
   }
 }
 
-
-
 class _CreateWidgetState extends State<CreateWidget>
     with TickerProviderStateMixin {
   late CreateModel _model;
-
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -133,7 +127,6 @@ class _CreateWidgetState extends State<CreateWidget>
   @override
   void initState() {
     super.initState();
-
 
     _model = createModel(context, () => CreateModel());
 
@@ -144,25 +137,27 @@ class _CreateWidgetState extends State<CreateWidget>
       'containerOnActionTriggerAnimation': AnimationInfo(
         trigger: AnimationTrigger.onActionTrigger,
         applyInitialState: true,
-        effectsBuilder: () => [
-          ScaleEffect(
-            curve: Curves.elasticOut,
-            delay: 0.0.ms,
-            duration: 500.0.ms,
-            begin: Offset(0.0, 0.0),
-            end: Offset(1.0, 1.0),
-          ),
-        ],
+        effectsBuilder:
+            () => [
+              ScaleEffect(
+                curve: Curves.elasticOut,
+                delay: 0.0.ms,
+                duration: 500.0.ms,
+                begin: Offset(0.0, 0.0),
+                end: Offset(1.0, 1.0),
+              ),
+            ],
       ),
     });
     setupAnimations(
-      animationsMap.values.where((anim) =>
-          anim.trigger == AnimationTrigger.onActionTrigger ||
-          !anim.applyInitialState),
+      animationsMap.values.where(
+        (anim) =>
+            anim.trigger == AnimationTrigger.onActionTrigger ||
+            !anim.applyInitialState,
+      ),
       this,
     );
   }
-
 
   @override
   void dispose() {
@@ -181,24 +176,22 @@ class _CreateWidgetState extends State<CreateWidget>
         FocusManager.instance.primaryFocus?.unfocus();
       },
 
-
-      onSecondaryTap: () => Navigator.pushNamed(context, '/cc'),
-
-
+      onSecondaryTap: () {
+        if (Platform.isWindows) {
+          Navigator.pushNamed(context, '/cc');
+        }
+      },
 
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Stack(
+        backgroundColor: FlutterFlowTheme.of(context).primary,
+        body: SafeArea(top: true,child:
+        Stack(
           children: [
-
-
             Positioned.fill(
-              child: Image.asset(
-                'assets/TEST.png',
-                fit: BoxFit.cover,
-              ),
+              child: Image.asset('assets/TEST.png', fit: BoxFit.cover),
             ),
+
             /* Positioned.fill(
               child: Transform.scale(
                 scale: 1.02, // 放大倍数（1.0 为原始大小）
@@ -213,10 +206,6 @@ class _CreateWidgetState extends State<CreateWidget>
                 ),
             ),
             ), */
-
-            
-
-
             Align(
               alignment: AlignmentDirectional(0, -1),
               child: Padding(
@@ -252,40 +241,40 @@ class _CreateWidgetState extends State<CreateWidget>
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '0',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.normal,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.normal,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '1',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '2',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -301,8 +290,10 @@ class _CreateWidgetState extends State<CreateWidget>
                                     enableInfiniteScroll: true,
                                     scrollDirection: Axis.vertical,
                                     autoPlay: false,
-                                    onPageChanged: (index, _) =>
-                                        _model.carousel1CurrentIndex = index,
+                                    onPageChanged:
+                                        (index, _) =>
+                                            _model.carousel1CurrentIndex =
+                                                index,
                                   ),
                                 ),
                               ),
@@ -321,130 +312,130 @@ class _CreateWidgetState extends State<CreateWidget>
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '0',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '1',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '2',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '3',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '4',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '5',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '6',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '7',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '8',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '9',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -460,20 +451,22 @@ class _CreateWidgetState extends State<CreateWidget>
                                     enableInfiniteScroll: true,
                                     scrollDirection: Axis.vertical,
                                     autoPlay: false,
-                                    onPageChanged: (index, _) =>
-                                        _model.carousel2CurrentIndex = index,
+                                    onPageChanged:
+                                        (index, _) =>
+                                            _model.carousel2CurrentIndex =
+                                                index,
                                   ),
                                 ),
                               ),
                             ),
                             Text(
                               '：',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
+                              style: FlutterFlowTheme.of(
+                                context,
+                              ).bodyMedium.override(
+                                fontFamily: 'Inter',
+                                letterSpacing: 0.0,
+                              ),
                             ),
                             Container(
                               decoration: BoxDecoration(
@@ -489,78 +482,78 @@ class _CreateWidgetState extends State<CreateWidget>
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '0',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '1',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '2',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '3',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '4',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '5',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -576,8 +569,10 @@ class _CreateWidgetState extends State<CreateWidget>
                                     enableInfiniteScroll: true,
                                     scrollDirection: Axis.vertical,
                                     autoPlay: false,
-                                    onPageChanged: (index, _) =>
-                                        _model.carousel3CurrentIndex = index,
+                                    onPageChanged:
+                                        (index, _) =>
+                                            _model.carousel3CurrentIndex =
+                                                index,
                                   ),
                                 ),
                               ),
@@ -596,130 +591,130 @@ class _CreateWidgetState extends State<CreateWidget>
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '0',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '1',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '2',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '3',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '4',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '5',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '6',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '7',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '8',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '9',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -735,20 +730,22 @@ class _CreateWidgetState extends State<CreateWidget>
                                     enableInfiniteScroll: true,
                                     scrollDirection: Axis.vertical,
                                     autoPlay: false,
-                                    onPageChanged: (index, _) =>
-                                        _model.carousel4CurrentIndex = index,
+                                    onPageChanged:
+                                        (index, _) =>
+                                            _model.carousel4CurrentIndex =
+                                                index,
                                   ),
                                 ),
                               ),
                             ),
                             Text(
                               '~',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
+                              style: FlutterFlowTheme.of(
+                                context,
+                              ).bodyMedium.override(
+                                fontFamily: 'Inter',
+                                letterSpacing: 0.0,
+                              ),
                             ),
                             Container(
                               decoration: BoxDecoration(
@@ -764,39 +761,39 @@ class _CreateWidgetState extends State<CreateWidget>
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '0',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '1',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '2',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -812,8 +809,10 @@ class _CreateWidgetState extends State<CreateWidget>
                                     enableInfiniteScroll: true,
                                     scrollDirection: Axis.vertical,
                                     autoPlay: false,
-                                    onPageChanged: (index, _) =>
-                                        _model.carousel5CurrentIndex = index,
+                                    onPageChanged:
+                                        (index, _) =>
+                                            _model.carousel5CurrentIndex =
+                                                index,
                                   ),
                                 ),
                               ),
@@ -832,130 +831,130 @@ class _CreateWidgetState extends State<CreateWidget>
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '0',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '1',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '2',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '3',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '4',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '5',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '6',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '7',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '8',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '9',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -971,20 +970,22 @@ class _CreateWidgetState extends State<CreateWidget>
                                     enableInfiniteScroll: true,
                                     scrollDirection: Axis.vertical,
                                     autoPlay: false,
-                                    onPageChanged: (index, _) =>
-                                        _model.carousel6CurrentIndex = index,
+                                    onPageChanged:
+                                        (index, _) =>
+                                            _model.carousel6CurrentIndex =
+                                                index,
                                   ),
                                 ),
                               ),
                             ),
                             Text(
                               '：',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
+                              style: FlutterFlowTheme.of(
+                                context,
+                              ).bodyMedium.override(
+                                fontFamily: 'Inter',
+                                letterSpacing: 0.0,
+                              ),
                             ),
                             Container(
                               decoration: BoxDecoration(
@@ -1000,78 +1001,78 @@ class _CreateWidgetState extends State<CreateWidget>
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '0',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '1',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '2',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '3',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '4',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '5',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -1087,8 +1088,10 @@ class _CreateWidgetState extends State<CreateWidget>
                                     enableInfiniteScroll: true,
                                     scrollDirection: Axis.vertical,
                                     autoPlay: false,
-                                    onPageChanged: (index, _) =>
-                                        _model.carousel7CurrentIndex = index,
+                                    onPageChanged:
+                                        (index, _) =>
+                                            _model.carousel7CurrentIndex =
+                                                index,
                                   ),
                                 ),
                               ),
@@ -1107,130 +1110,130 @@ class _CreateWidgetState extends State<CreateWidget>
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '0',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '1',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '2',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '3',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '4',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '5',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '6',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '7',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '8',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
                                         '9',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                            ),
+                                        style: FlutterFlowTheme.of(
+                                          context,
+                                        ).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 20,
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -1246,8 +1249,10 @@ class _CreateWidgetState extends State<CreateWidget>
                                     enableInfiniteScroll: true,
                                     scrollDirection: Axis.vertical,
                                     autoPlay: false,
-                                    onPageChanged: (index, _) =>
-                                        _model.carousel8CurrentIndex = index,
+                                    onPageChanged:
+                                        (index, _) =>
+                                            _model.carousel8CurrentIndex =
+                                                index,
                                   ),
                                 ),
                               ),
@@ -1269,19 +1274,19 @@ class _CreateWidgetState extends State<CreateWidget>
                               obscureText: false,
                               decoration: InputDecoration(
                                 isDense: true,
-                                labelStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
-                                hintText: 'ヾ( ˃ᴗ˂ )◞ • *✰',
-                                hintStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                                labelStyle: FlutterFlowTheme.of(
+                                  context,
+                                ).labelMedium.override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
+                                hintText: 'ヾ( ˃◡˂ )◞ • *✰',
+                                hintStyle: FlutterFlowTheme.of(
+                                  context,
+                                ).labelMedium.override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x00000000),
@@ -1311,31 +1316,32 @@ class _CreateWidgetState extends State<CreateWidget>
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 filled: true,
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                fillColor:
+                                    FlutterFlowTheme.of(
+                                      context,
+                                    ).secondaryBackground,
                               ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
+                              style: FlutterFlowTheme.of(
+                                context,
+                              ).bodyMedium.override(
+                                fontFamily: 'Inter',
+                                letterSpacing: 0.0,
+                              ),
+
                               // maxLength: 20,
-
-
                               inputFormatters: [
-                                _CustomLengthLimitingTextInputFormatter(20), // 限制最终长度为
+                                _CustomLengthLimitingTextInputFormatter(
+                                  20,
+                                ), // 限制最终长度为
                               ],
 
-
-
-
-
-                              buildCounter: (context,
-                                      {required currentLength,
-                                      required isFocused,
-                                      maxLength}) =>
-                                  null,
+                              buildCounter:
+                                  (
+                                    context, {
+                                    required currentLength,
+                                    required isFocused,
+                                    maxLength,
+                                  }) => null,
                               cursorColor:
                                   FlutterFlowTheme.of(context).primaryText,
                               validator: _model.textControllerValidator
@@ -1343,41 +1349,38 @@ class _CreateWidgetState extends State<CreateWidget>
                             ),
                           ),
 
-
                           Container(
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).error,
                               borderRadius: BorderRadius.circular(8),
 
                               image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/A02.gif'),
+                                image: AssetImage('assets/A02.gif'),
                                 fit: BoxFit.cover,
                               ),
-
-
                             ),
-                            child:
-
-
-
-                            FFButtonWidget(
+                            child: FFButtonWidget(
                               onPressed: () async {
-                                FFAppState()
-                                    .addToLine(_model.textController.text);
+                                FFAppState().addToLine(
+                                  _model.textController.text,
+                                );
                                 safeSetState(() {});
                                 FFAppState().addToTimelistA1(
-                                    _model.carousel1CurrentIndex * 10 +
-                                        _model.carousel2CurrentIndex);
+                                  _model.carousel1CurrentIndex * 10 +
+                                      _model.carousel2CurrentIndex,
+                                );
                                 FFAppState().addToTimelistA2(
-                                    _model.carousel3CurrentIndex * 10 +
-                                        _model.carousel4CurrentIndex);
+                                  _model.carousel3CurrentIndex * 10 +
+                                      _model.carousel4CurrentIndex,
+                                );
                                 FFAppState().addToTimelistB1(
-                                    _model.carousel5CurrentIndex * 10 +
-                                        _model.carousel6CurrentIndex);
+                                  _model.carousel5CurrentIndex * 10 +
+                                      _model.carousel6CurrentIndex,
+                                );
                                 FFAppState().addToTimelistB2(
-                                    _model.carousel7CurrentIndex * 10 +
-                                        _model.carousel8CurrentIndex);
+                                  _model.carousel7CurrentIndex * 10 +
+                                      _model.carousel8CurrentIndex,
+                                );
                                 safeSetState(() {});
                                 FFAppState().addToColor(Color(0x00000000));
                                 safeSetState(() {});
@@ -1389,17 +1392,26 @@ class _CreateWidgetState extends State<CreateWidget>
                               icon: Icon(
                                 Icons.add,
                                 size: 15,
-                                color: Color.fromRGBO(253, 255, 241, 1)
-,
+                                color: Color.fromRGBO(253, 255, 241, 1),
                               ),
                               options: FFButtonOptions(
                                 height: 40,
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                                iconPadding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                  16,
+                                  0,
+                                  16,
+                                  0,
+                                ),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                ),
                                 color: Color.fromRGBO(125, 209, 212, 0),
-                                textStyle:TextStyle(fontWeight:FontWeight.bold),
+                                textStyle: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                                 /* textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
@@ -1438,35 +1450,47 @@ class _CreateWidgetState extends State<CreateWidget>
                           children: [
                             SlidableAction(
                               label: 'Color',
-                              backgroundColor:
-                                  Color.fromRGBO(125, 209, 212, 1),
+                              backgroundColor: Color.fromRGBO(125, 209, 212, 1),
                               icon: Icons.color_lens,
                               // borderRadius: BorderRadius.circular(20),
                               onPressed: (_) async {
                                 final _colorPickedColor =
                                     await showFFColorPicker(
-                                  context,
-                                  currentColor: _model.colorPicked ??=
-                                      FlutterFlowTheme.of(context).primary,
-                                  showRecentColors: true,
-                                  allowOpacity: true,
-                                  textColor:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  secondaryTextColor:
-                                      FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                  backgroundColor: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
-                                  primaryButtonBackgroundColor:
-                                      FlutterFlowTheme.of(context).primary,
-                                  primaryButtonTextColor: Colors.white,
-                                  primaryButtonBorderColor: Colors.transparent,
-                                  displayAsBottomSheet: isMobileWidth(context),
-                                );
+                                      context,
+                                      currentColor:
+                                          _model.colorPicked ??=
+                                              FlutterFlowTheme.of(
+                                                context,
+                                              ).primary,
+                                      showRecentColors: true,
+                                      allowOpacity: true,
+                                      textColor:
+                                          FlutterFlowTheme.of(
+                                            context,
+                                          ).primaryText,
+                                      secondaryTextColor:
+                                          FlutterFlowTheme.of(
+                                            context,
+                                          ).secondaryText,
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(
+                                            context,
+                                          ).primaryBackground,
+                                      primaryButtonBackgroundColor:
+                                          FlutterFlowTheme.of(context).primary,
+                                      primaryButtonTextColor: Colors.white,
+                                      primaryButtonBorderColor:
+                                          Colors.transparent,
+                                      displayAsBottomSheet: isMobileWidth(
+                                        context,
+                                      ),
+                                    );
 
                                 if (_colorPickedColor != null) {
-                                  safeSetState(() =>
-                                      _model.colorPicked = _colorPickedColor);
+                                  safeSetState(
+                                    () =>
+                                        _model.colorPicked = _colorPickedColor,
+                                  );
                                 }
 
                                 FFAppState().updateColorAtIndex(
@@ -1478,8 +1502,7 @@ class _CreateWidgetState extends State<CreateWidget>
                             ),
                             SlidableAction(
                               label: 'Update',
-                              backgroundColor:
-                                  Color.fromRGBO(203, 202, 205, 1),
+                              backgroundColor: Color.fromRGBO(203, 202, 205, 1),
                               icon: Icons.mode,
                               // borderRadius: BorderRadius.circular(20),
                               onPressed: (_) async {
@@ -1527,96 +1550,101 @@ class _CreateWidgetState extends State<CreateWidget>
                               onPressed: (_) async {
                                 FFAppState().removeFromLine(listnumberItem);
                                 FFAppState().removeAtIndexFromTimelistA1(
-                                    listnumberIndex);
+                                  listnumberIndex,
+                                );
                                 FFAppState().removeAtIndexFromTimelistA2(
-                                    listnumberIndex);
+                                  listnumberIndex,
+                                );
                                 FFAppState().removeAtIndexFromTimelistB1(
-                                    listnumberIndex);
+                                  listnumberIndex,
+                                );
                                 FFAppState().removeAtIndexFromTimelistB2(
-                                    listnumberIndex);
-                                FFAppState()
-                                    .removeAtIndexFromColor(listnumberIndex);
+                                  listnumberIndex,
+                                );
+                                FFAppState().removeAtIndexFromColor(
+                                  listnumberIndex,
+                                );
                                 safeSetState(() {});
                               },
                             ),
                           ],
                         ),
                         child: Container(
-                        decoration: BoxDecoration(
-
-
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomCenter,
-                            colors: [Color.fromRGBO(170, 224, 221, 1), Color.fromRGBO(253, 255, 241, 1)],
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color.fromRGBO(170, 224, 221, 1),
+                                Color.fromRGBO(253, 255, 241, 1),
+                              ],
                             ),
-                          borderRadius: BorderRadius.circular(8),
-                          
+                            borderRadius: BorderRadius.circular(8),
+                          ),
 
-                        ),
-                      
-                      child:Material(
-                          color: Colors.transparent,
-                          child: ListTile(
-                            title: Text(
-                              (int var1, int var2, int var3, int var4) {
-                                return '${var1.toString().padLeft(2, '0')} ：${var2.toString().padLeft(2, '0')}  ~  ${var3.toString().padLeft(2, '0')} ：${var4.toString().padLeft(2, '0')}';
-                              }(
-                                  FFAppState()
-                                      .timelistA1
-                                      .elementAtOrNull(listnumberIndex)!,
-                                  FFAppState()
-                                      .timelistA2
-                                      .elementAtOrNull(listnumberIndex)!,
-                                  FFAppState()
-                                      .timelistB1
-                                      .elementAtOrNull(listnumberIndex)!,
-                                  FFAppState()
-                                      .timelistB2
-                                      .elementAtOrNull(listnumberIndex)!),
-                              style: FlutterFlowTheme.of(context)
-                                  .titleLarge
-                                  .override(
-                                    fontFamily: 'Inter Tight',
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                            subtitle: Text(
-                              valueOrDefault<String>(
-                                FFAppState()
-                                    .line
-                                    .elementAtOrNull(listnumberIndex),
-                                '空',
+                          child: Material(
+                            color: Colors.transparent,
+                            child: ListTile(
+                              title: Text(
+                                (int var1, int var2, int var3, int var4) {
+                                  return '${var1.toString().padLeft(2, '0')} ：${var2.toString().padLeft(2, '0')}  ~  ${var3.toString().padLeft(2, '0')} ：${var4.toString().padLeft(2, '0')}';
+                                }(
+                                  FFAppState().timelistA1.elementAtOrNull(
+                                    listnumberIndex,
+                                  )!,
+                                  FFAppState().timelistA2.elementAtOrNull(
+                                    listnumberIndex,
+                                  )!,
+                                  FFAppState().timelistB1.elementAtOrNull(
+                                    listnumberIndex,
+                                  )!,
+                                  FFAppState().timelistB2.elementAtOrNull(
+                                    listnumberIndex,
+                                  )!,
+                                ),
+                                style: FlutterFlowTheme.of(
+                                  context,
+                                ).titleLarge.override(
+                                  fontFamily: 'Inter Tight',
+                                  letterSpacing: 0.0,
+                                ),
                               ),
-                              style: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
+                              subtitle: Text(
+                                valueOrDefault<String>(
+                                  FFAppState().line.elementAtOrNull(
+                                    listnumberIndex,
                                   ),
-                            ),
-                            trailing: Icon(
-                              Mikufamily.miku_icon,
-                              color: FFAppState()
-                                  .color
-                                  .elementAtOrNull(listnumberIndex),
-                              size: 45,
-                            ),
-                              
+                                  '空',
+                                ),
+                                style: FlutterFlowTheme.of(
+                                  context,
+                                ).labelMedium.override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
+                              ),
+                              trailing: Icon(
+                                Mikufamily.miku_icon,
+                                color: FFAppState().color.elementAtOrNull(
+                                  listnumberIndex,
+                                ),
+                                size: 45,
+                              ),
 
-
-
-
-                            tileColor: Colors.transparent,
-                            dense: false,
-                            contentPadding:
-                                EdgeInsetsDirectional.fromSTEB(12, 0, 15, 0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(0),
+                              tileColor: Colors.transparent,
+                              dense: false,
+                              contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                12,
+                                0,
+                                15,
+                                0,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(0),
+                              ),
                             ),
                           ),
                         ),
-                      ),
                       );
                     },
                   );
@@ -1635,12 +1663,9 @@ class _CreateWidgetState extends State<CreateWidget>
                     borderRadius: BorderRadius.circular(40),
 
                     image: DecorationImage(
-                      image: AssetImage(
-                          'assets/A04.png'),
+                      image: AssetImage('assets/A04.png'),
                       fit: BoxFit.cover,
                     ),
-
-
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
@@ -1654,52 +1679,69 @@ class _CreateWidgetState extends State<CreateWidget>
                             borderRadius: BorderRadius.circular(25),
 
                             image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/A02.gif'),
+                              image: AssetImage('assets/A02.gif'),
                               fit: BoxFit.cover,
                             ),
-
-
                           ),
                           child: Builder(
-                            builder: (context) => Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  await showDialog(
-                                    barrierDismissible: false,
-                                    context: context,
-                                    builder: (dialogContext) {
-                                      return Dialog(
-                                        elevation: 0,
-                                        insetPadding: EdgeInsets.zero,
-                                        backgroundColor: Colors.transparent,
-                                        alignment: AlignmentDirectional(0, 0)
-                                            .resolve(Directionality.of(context)),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            FocusScope.of(dialogContext).unfocus();
-                                            FocusManager.instance.primaryFocus
-                                                ?.unfocus();
-                                          },
-                                          child: YusheWidget(),
-                                        ),
+                            builder:
+                                (context) => Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                  ),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (dialogContext) {
+                                          return Dialog(
+                                            elevation: 0,
+                                            insetPadding: EdgeInsets.zero,
+                                            backgroundColor: Colors.transparent,
+                                            alignment: AlignmentDirectional(
+                                              0,
+                                              0,
+                                            ).resolve(
+                                              Directionality.of(context),
+                                            ),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                FocusScope.of(
+                                                  dialogContext,
+                                                ).unfocus();
+                                                FocusManager
+                                                    .instance
+                                                    .primaryFocus
+                                                    ?.unfocus();
+                                              },
+                                              child: YusheWidget(),
+                                            ),
+                                          );
+                                        },
                                       );
                                     },
-                                  );
-                                },
-                                text: '存预设',
-                                options: FFButtonOptions(
-                                  width: 50,
-                                  height: 50,
-                                  padding:
-                                      EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                  
-                                  iconPadding: EdgeInsets.all(0),
-                                  color: Color.fromRGBO(255, 150, 172, 0),
-                                  textStyle:TextStyle(fontWeight:FontWeight.bold,
-                                  color: Color.fromRGBO(253, 255, 241, 1)),
-                                  /* textStyle: FlutterFlowTheme.of(context)
+                                    text: '存预设',
+                                    options: FFButtonOptions(
+                                      width: 50,
+                                      height: 50,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                      ),
+
+                                      iconPadding: EdgeInsets.all(0),
+                                      color: Color.fromRGBO(255, 150, 172, 0),
+                                      textStyle: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromRGBO(253, 255, 241, 1),
+                                      ),
+                                      /* textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(
                                         fontFamily: 'Inter Tight',
@@ -1707,12 +1749,12 @@ class _CreateWidgetState extends State<CreateWidget>
                                         fontSize: 12,
                                         letterSpacing: 0.0,
                                       ), */
-                                  elevation: 0,
-                                  borderRadius: BorderRadius.circular(24),
+                                      elevation: 0,
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    showLoadingIndicator: false,
+                                  ),
                                 ),
-                                showLoadingIndicator: false,
-                              ),
-                            ),
                           ),
                         ),
                       ),
@@ -1727,8 +1769,8 @@ class _CreateWidgetState extends State<CreateWidget>
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 scrollDirection: Axis.horizontal,
                                 itemCount: prelist.length,
-                                separatorBuilder: (_, __) =>
-                                    SizedBox(width: 10),
+                                separatorBuilder:
+                                    (_, __) => SizedBox(width: 10),
                                 itemBuilder: (context, prelistIndex) {
                                   final prelistItem = prelist[prelistIndex];
                                   return InkWell(
@@ -1742,43 +1784,52 @@ class _CreateWidgetState extends State<CreateWidget>
                                     },
                                     child: FFButtonWidget(
                                       onPressed: () async {
-                                        FFAppState().timelistA1 = prelistItem
-                                            .ta1
-                                            .toList()
-                                            .cast<int>();
-                                        FFAppState().timelistA2 = prelistItem
-                                            .ta2
-                                            .toList()
-                                            .cast<int>();
-                                        FFAppState().timelistB1 = prelistItem
-                                            .tb1
-                                            .toList()
-                                            .cast<int>();
-                                        FFAppState().timelistB2 = prelistItem
-                                            .tb2
-                                            .toList()
-                                            .cast<int>();
-                                        FFAppState().line = prelistItem.sTline
-                                            .toList()
-                                            .cast<String>();
-                                        FFAppState().color = prelistItem.cOcolor
-                                            .toList()
-                                            .cast<Color>();
+                                        FFAppState().timelistA1 =
+                                            prelistItem.ta1
+                                                .toList()
+                                                .cast<int>();
+                                        FFAppState().timelistA2 =
+                                            prelistItem.ta2
+                                                .toList()
+                                                .cast<int>();
+                                        FFAppState().timelistB1 =
+                                            prelistItem.tb1
+                                                .toList()
+                                                .cast<int>();
+                                        FFAppState().timelistB2 =
+                                            prelistItem.tb2
+                                                .toList()
+                                                .cast<int>();
+                                        FFAppState().line =
+                                            prelistItem.sTline
+                                                .toList()
+                                                .cast<String>();
+                                        FFAppState().color =
+                                            prelistItem.cOcolor
+                                                .toList()
+                                                .cast<Color>();
                                         safeSetState(() {});
-                                      
                                       },
                                       text: prelistItem.name,
                                       options: FFButtonOptions(
                                         width: 50,
                                         height: 50,
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                        
+                                          0,
+                                          0,
+                                          0,
+                                          0,
+                                        ),
+
                                         iconPadding: EdgeInsets.all(0),
                                         color: Color.fromRGBO(253, 255, 241, 1),
-                                        textStyle:TextStyle(
-                                          fontWeight:FontWeight.bold,
-                                          color:FlutterFlowTheme.of(context).primary,),
+                                        textStyle: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              FlutterFlowTheme.of(
+                                                context,
+                                              ).primary,
+                                        ),
                                         /* textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
@@ -1791,9 +1842,16 @@ class _CreateWidgetState extends State<CreateWidget>
                                             ), */
                                         elevation: 0,
                                         borderRadius: BorderRadius.circular(24),
-                                        hoverColor: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        hoverTextColor: Color.fromRGBO(253, 255, 241, 1),
+                                        hoverColor:
+                                            FlutterFlowTheme.of(
+                                              context,
+                                            ).primary,
+                                        hoverTextColor: Color.fromRGBO(
+                                          253,
+                                          255,
+                                          241,
+                                          1,
+                                        ),
                                       ),
                                     ),
                                   );
@@ -1824,11 +1882,10 @@ class _CreateWidgetState extends State<CreateWidget>
                     child: Text(
                       '请输入正确的时间顺序且勿重叠',
                       style: FlutterFlowTheme.of(context).bodySmall.override(
-                            fontFamily: 'Inter',
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            letterSpacing: 0.0,
-                          ),
+                        fontFamily: 'Inter',
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        letterSpacing: 0.0,
+                      ),
                     ),
                   ),
                 ).animateOnActionTrigger(
@@ -1846,119 +1903,125 @@ class _CreateWidgetState extends State<CreateWidget>
                     borderRadius: BorderRadius.circular(8),
 
                     image: DecorationImage(
-                      image: AssetImage(
-                          'assets/A02.gif'),
+                      image: AssetImage('assets/A02.gif'),
                       fit: BoxFit.cover,
                     ),
-
-
-
                   ),
-                  child: 
-                FFButtonWidget(
-                  onPressed: () async {
-                    _model.a160 = (List<int> a1) {
-                      return a1.map((item) => item * 60).toList();
-                    }(FFAppState().timelistA1.toList())
-                        .toList()
-                        .cast<int>();
-                    safeSetState(() {});
-                    _model.b160 = (List<int> b1) {
-                      return b1.map((item) => item * 60).toList();
-                    }(FFAppState().timelistB1.toList())
-                        .toList()
-                        .cast<int>();
-                    safeSetState(() {});
-                    _model.toplist = (List<int> a160, List<int> a2) {
-                      return List.generate(
-                          a160.length, (index) => a160[index] + a2[index]);
-                    }(_model.a160.toList(), FFAppState().timelistA2.toList())
-                        .toList()
-                        .cast<int>();
-                    safeSetState(() {});
-                    _model.endlist = (List<int> b160, List<int> b2) {
-                      return List.generate(
-                          b160.length, (index) => b160[index] + b2[index]);
-                    }(_model.b160.toList(), FFAppState().timelistB2.toList())
-                        .toList()
-                        .cast<int>();
-                    safeSetState(() {});
-                    if ((List<int> toplist, List<int> endlist) {
-                      return List.generate(
-                              toplist.length,
-                              (i) =>
-                                  toplist[i] <= endlist[i] &&
-                                  (i == toplist.length - 1 ||
-                                      endlist[i] <= toplist[i + 1]))
-                          .every((e) => e);
-                    }(_model.toplist.toList(), _model.endlist.toList())) {
-                      Navigator.pushNamed(context, '/second');
-                    } else {
-                      if (animationsMap['containerOnActionTriggerAnimation'] !=
-                          null) {
-                        await animationsMap[
-                                'containerOnActionTriggerAnimation']!
-                            .controller
-                            .forward(from: 0.0);
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      _model.a160 =
+                          (List<int> a1) {
+                            return a1.map((item) => item * 60).toList();
+                          }(
+                            FFAppState().timelistA1.toList(),
+                          ).toList().cast<int>();
+                      safeSetState(() {});
+                      _model.b160 =
+                          (List<int> b1) {
+                            return b1.map((item) => item * 60).toList();
+                          }(
+                            FFAppState().timelistB1.toList(),
+                          ).toList().cast<int>();
+                      safeSetState(() {});
+                      _model.toplist =
+                          (List<int> a160, List<int> a2) {
+                            return List.generate(
+                              a160.length,
+                              (index) => a160[index] + a2[index],
+                            );
+                          }(
+                            _model.a160.toList(),
+                            FFAppState().timelistA2.toList(),
+                          ).toList().cast<int>();
+                      safeSetState(() {});
+                      _model.endlist =
+                          (List<int> b160, List<int> b2) {
+                            return List.generate(
+                              b160.length,
+                              (index) => b160[index] + b2[index],
+                            );
+                          }(
+                            _model.b160.toList(),
+                            FFAppState().timelistB2.toList(),
+                          ).toList().cast<int>();
+                      safeSetState(() {});
+                      if ((List<int> toplist, List<int> endlist) {
+                        return List.generate(
+                          toplist.length,
+                          (i) =>
+                              toplist[i] <= endlist[i] &&
+                              (i == toplist.length - 1 ||
+                                  endlist[i] <= toplist[i + 1]),
+                        ).every((e) => e);
+                      }(_model.toplist.toList(), _model.endlist.toList())) {
+                        Navigator.pushNamed(context, '/second');
+                      } else {
+                        if (animationsMap['containerOnActionTriggerAnimation'] !=
+                            null) {
+                          await animationsMap['containerOnActionTriggerAnimation']!
+                              .controller
+                              .forward(from: 0.0);
+                        }
+                        await Future.delayed(
+                          const Duration(milliseconds: 2500),
+                        );
+                        if (animationsMap['containerOnActionTriggerAnimation'] !=
+                            null) {
+                          await animationsMap['containerOnActionTriggerAnimation']!
+                              .controller
+                              .reverse();
+                        }
                       }
-                      await Future.delayed(const Duration(milliseconds: 2500));
-                      if (animationsMap['containerOnActionTriggerAnimation'] !=
-                          null) {
-                        await animationsMap[
-                                'containerOnActionTriggerAnimation']!
-                            .controller
-                            .reverse();
-                      }
-                    }
-                  },
-                  text: '主页',
-                  icon: Icon(
-                    Icons.home_rounded,
-                    size: 24,
-                    color: Color.fromRGBO(253, 255, 241, 1),
-                  ),
-                  options: FFButtonOptions(
-                    height: 40,
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                    iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                    color: Color.fromRGBO(125, 209, 212, 0),
-                    textStyle:TextStyle(fontWeight:FontWeight.bold,
-                      color: Color.fromRGBO(253, 255, 241, 1)),
-                    /* textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                    },
+                    text: '主页',
+                    icon: Icon(
+                      Icons.home_rounded,
+                      size: 24,
+                      color: Color.fromRGBO(253, 255, 241, 1),
+                    ),
+                    options: FFButtonOptions(
+                      height: 40,
+                      padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                      color: Color.fromRGBO(125, 209, 212, 0),
+                      textStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(253, 255, 241, 1),
+                      ),
+                      /* textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Inter Tight',
                           color: Colors.white,
                           letterSpacing: 0.0,
                         ), */
-                    elevation: 0,
-                    borderRadius: BorderRadius.circular(8),
+                      elevation: 0,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    showLoadingIndicator: false,
                   ),
-                  showLoadingIndicator: false,
-                ),
                 ),
               ),
             ),
-          
-            // 顶部边缘拖动条
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              height: 10, // 仅10px高度的触发区域
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onPanStart: (_) => windowManager.startDragging(),
-                child: Container(color: Color.fromRGBO(125, 209, 212, 1)),
+
+            // 只在Windows平台显示顶部边缘拖动条
+            if (Platform.isWindows)
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                height: 10,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onPanStart: (_) => windowManager.startDragging(),
+                  child: Container(color: Color.fromRGBO(125, 209, 212, 1)),
+                ),
               ),
-            )
-          
           ],
+        ),
         ),
       ),
     );
   }
 }
-
-
 
 class _CustomLengthLimitingTextInputFormatter extends TextInputFormatter {
   _CustomLengthLimitingTextInputFormatter(this.maxLength);
