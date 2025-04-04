@@ -94,7 +94,7 @@ class MyApp extends StatelessWidget {
       ],
 
       locale: const Locale('zh', 'CN'),
-      title: 'Flutter Demo',
+      title: 'MikuDay',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         fontFamily: Platform.isWindows ? "微软雅黑" : null,
